@@ -27,13 +27,13 @@
 
     "autoload": {
         "psr-4" : {
-            "Hostnet\\Component\\Form" : "src/"
+            "Hostnet\\Component\\Form\\" : "src/"
         }
     },
 
     "autoload-dev": {
         "psr-4" : {
-            "Hostnet\\Component\\Form" : "test/"
+            "Hostnet\\Component\\Form\\" : "test/"
         }
     }
 }
