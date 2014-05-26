@@ -1,11 +1,14 @@
 <?php
 namespace Hostnet\Component\Form\Simple;
 
-use Hostnet\Component\Form\FormSuccesHandlerInterface;
+use Hostnet\Form\Exception\FormNotFoundException;
+use Hostnet\Component\Form\FormInformationInterface;
 use Hostnet\Component\Form\FormFailureHandlerInterface;
-use Hostnet\Component\Form\FormHandlerInterface;
 use Hostnet\Component\Form\FormProviderInterface;
+use Hostnet\Component\Form\FormSuccesHandlerInterface;
 use Symfony\Component\Form\FormFactoryInterface;
+use Symfony\Component\Form\FormInterface;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @author Iltar van der Berg <ivanderberg@hostnet.nl>
@@ -19,14 +22,25 @@ class SimpleFormProvider implements FormProviderInterface
     private $form_factory;
 
     /**
+     * @param FormFactoryInterface $form_factory
+     */
+    public function __construct(FormFactoryInterface $form_factory)
+    {
+        $this->form_factory = $form_factory;
+    }
+
+    /**
      * @see \Hostnet\Component\Form\FormProviderInterface::handle()
      */
-    public function handle(Request $request, FormHandlerInterface $handler)
+    public function handle(Request $request, FormInformationInterface $handler, FormInterface $form = null)
     {
-        $form = $this->form_factory->create($handler->getType(), $handler->getData(), $handler->getOptions());
-        $form->handleRequest($request);
+        if (null !== $form) {
+            $handler->setForm($form);
+        } elseif (null === ($form = $handler->getForm())) {
+            throw new FormNotFoundException($handler);
+        }
 
-        $handler->setForm($form);
+        $form->handleRequest($request);
 
         if (!$form->isSubmitted()) {
             return;

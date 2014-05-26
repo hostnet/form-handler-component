@@ -2,6 +2,7 @@
 namespace Hostnet\Component\Form;
 
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Form\FormInterface;
 
 /**
  * @author Iltar van der Berg <ivanderberg@hostnet.nl>
@@ -10,8 +11,9 @@ use Symfony\Component\HttpFoundation\Request;
 interface FormProviderInterface
 {
     /**
-     * @param Request              $request
-     * @param FormHandlerInterface $handler
+     * @param Request                  $request
+     * @param FormInformationInterface $handler
+     * @param FormInterface            $form
      */
-    public function handle(Request $request, FormHandlerInterface $handler);
+    public function handle(Request $request, FormInformationInterface $handler, FormInterface $form = null);
 }
