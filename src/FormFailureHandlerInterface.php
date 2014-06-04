@@ -1,6 +1,8 @@
 <?php
 namespace Hostnet\Component\Form;
 
+use Symfony\Component\HttpFoundation\Request;
+
 /**
  * @author Iltar van der Berg <ivanderberg@hostnet.nl>
  * @author Yannick de Lange <ydelange@hostnet.nl>
@@ -8,7 +10,8 @@ namespace Hostnet\Component\Form;
 interface FormFailureHandlerInterface
 {
     /**
+     * @param Request $request
      * @return mixed
      */
-    public function onFailure();
+    public function onFailure(Request $request);
 }

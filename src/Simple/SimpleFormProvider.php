@@ -48,10 +48,10 @@ class SimpleFormProvider implements FormProviderInterface
 
         if ($form->isValid()) {
             if ($handler instanceof FormSuccesHandlerInterface) {
-                return $handler->onSuccess();
+                return $handler->onSuccess($request);
             }
         } elseif ($handler instanceof FormFailureHandlerInterface) {
-            return $handler->onFailure();
+            return $handler->onFailure($request);
         }
     }
 }
