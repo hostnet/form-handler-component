@@ -1,7 +1,7 @@
 <?php
 namespace Hostnet\Component\Form\Simple;
 
-use Hostnet\Form\Exception\FormNotFoundException;
+use Hostnet\Component\Form\Exception\FormNotFoundException;
 use Hostnet\Component\Form\FormInformationInterface;
 use Hostnet\Component\Form\FormFailureHandlerInterface;
 use Hostnet\Component\Form\FormProviderInterface;

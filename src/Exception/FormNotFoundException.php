@@ -1,5 +1,5 @@
 <?php
-namespace Hostnet\Form\Exception;
+namespace Hostnet\Component\Form\Exception;
 
 use Hostnet\Component\Form\FormInformationInterface;
 
