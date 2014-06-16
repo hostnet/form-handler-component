@@ -1,8 +1,8 @@
 <?php
 namespace Hostnet\Component\Form;
 
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Form\FormInterface;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @author Iltar van der Berg <ivanderberg@hostnet.nl>
