@@ -6,6 +6,6 @@ use Hostnet\Component\Form\FormInformationInterface;
 use Hostnet\Component\Form\FormSuccesHandlerInterface;
 
 abstract class FormHandlerMock implements FormInformationInterface, FormSuccesHandlerInterface,
-    FormFailureHandlerInterface
+ FormFailureHandlerInterface
 {
 }
