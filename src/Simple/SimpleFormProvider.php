@@ -37,7 +37,14 @@ class SimpleFormProvider implements FormProviderInterface
         if (null !== $form) {
             $handler->setForm($form);
         } elseif (null === ($form = $handler->getForm())) {
-            throw new FormNotFoundException($handler);
+            $form = $this->form_factory->create($handler->getType(), $handler->getData(), $handler->getOptions());
+
+            if (!$form instanceof FormInterface) {
+                throw new FormNotFoundException($handler);
+            }
+
+            // set the form which is associated with the handler
+            $handler->setForm($form);
         }
 
         $form->handleRequest($request);
