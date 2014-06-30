@@ -99,13 +99,48 @@ class SimpleFormProviderTest extends \PHPUnit_Framework_TestCase
     /**
      * @covers ::__construct
      * @covers ::handle
-     * @expectedException Hostnet\Component\Form\Exception\FormNotFoundException
      */
     public function testNoForm()
     {
         $handler = $this->getMockForAbstractClass('Hostnet\Component\Form\Simple\FormHandlerMock');
         $factory = $this->getMockBuilder('Symfony\Component\Form\FormFactoryInterface')->getMock();
         $request = $this->getMockBuilder('Symfony\Component\HttpFoundation\Request')->getMock();
+        $form    = $this->getMockBuilder('Symfony\Component\Form\FormInterface')->getMock();
+
+        $handler
+            ->expects($this->once())
+            ->method("getOptions")
+            ->willReturn([]);
+
+        $factory
+            ->expects($this->once())
+            ->method("create")
+            ->willReturn($form);
+
+        $handler
+            ->expects($this->once())
+            ->method("setForm")
+            ->with($form);
+
+        $provider = new SimpleFormProvider($factory);
+        $provider->handle($request, $handler);
+    }
+
+    /**
+     * @covers ::__construct
+     * @covers ::handle
+     * @expectedException Hostnet\Component\Form\Exception\FormNotFoundException
+     */
+    public function testNoFormNotFound()
+    {
+        $handler = $this->getMockForAbstractClass('Hostnet\Component\Form\Simple\FormHandlerMock');
+        $factory = $this->getMockBuilder('Symfony\Component\Form\FormFactoryInterface')->getMock();
+        $request = $this->getMockBuilder('Symfony\Component\HttpFoundation\Request')->getMock();
+
+        $handler
+            ->expects($this->once())
+            ->method("getOptions")
+            ->willReturn([]);
 
         $provider = new SimpleFormProvider($factory);
         $provider->handle($request, $handler);
