@@ -64,18 +64,22 @@ class SimpleFormProviderTest extends \PHPUnit_Framework_TestCase
     {
         $request = new Request();
 
-        $this->form->expects($this->once())
+        $this->form
+            ->expects($this->once())
             ->method('isValid')
             ->willReturn(false);
 
-        $this->form->expects($this->once())
+        $this->form
+            ->expects($this->once())
             ->method('isSubmitted')
             ->willReturn(true);
 
-        $this->handler->expects($this->never())
+        $this->handler
+            ->expects($this->never())
             ->method('onSuccess');
 
-        $this->handler->expects($this->once())
+        $this->handler
+            ->expects($this->once())
             ->method('onFailure')
             ->with($request)
             ->willReturn('bar');
