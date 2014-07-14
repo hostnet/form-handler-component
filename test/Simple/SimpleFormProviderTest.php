@@ -1,171 +1,193 @@
 <?php
 namespace Hostnet\Component\Form\Simple;
 
+use Symfony\Component\HttpFoundation\Request;
+
 /**
  * @author Yannick de Lange <ydelange@hostnet.nl>
+ * @covers ::__construct
  * @coversDefaultClass Hostnet\Component\Form\Simple\SimpleFormProvider
  */
 class SimpleFormProviderTest extends \PHPUnit_Framework_TestCase
 {
+    private $handler;
+    private $factory;
+    private $form;
+
     /**
-     * @covers ::__construct
+     * @see PHPUnit_Framework_TestCase::setUp()
+     */
+    public function setUp()
+    {
+        $this->handler = $this->getMockForAbstractClass('Hostnet\Component\Form\Simple\FormHandlerMock');
+        $this->factory = $this->getMock('Symfony\Component\Form\FormFactoryInterface');
+        $this->form    = $this->getMock('Symfony\Component\Form\FormInterface');
+    }
+
+    /**
      * @covers ::handle
      */
     public function testSuccess()
     {
-        $handler = $this->getMockForAbstractClass('Hostnet\Component\Form\Simple\FormHandlerMock');
-        $factory = $this->getMockBuilder('Symfony\Component\Form\FormFactoryInterface')->getMock();
-        $form    = $this->getMockBuilder('Symfony\Component\Form\FormInterface')->getMock();
-        $request = $this->getMockBuilder('Symfony\Component\HttpFoundation\Request')->getMock();
+        $request = new Request();
 
-        $form->expects($this->once())
+        $this->form
+            ->expects($this->once())
             ->method('isValid')
             ->willReturn(true);
 
-        $form->expects($this->once())
+        $this->form
+            ->expects($this->once())
             ->method('isSubmitted')
             ->willReturn(true);
 
-        $handler->expects($this->once())
+        $this->handler
+            ->expects($this->once())
             ->method('onSuccess')
             ->with($request)
-            ->willReturn("foo");
+            ->willReturn('foo');
 
-        $handler->expects($this->never())
+        $this->handler
+            ->expects($this->never())
             ->method('onFailure');
 
-        $provider = new SimpleFormProvider($factory);
-        $resp     = $provider->handle($request, $handler, $form);
+        $provider = new SimpleFormProvider($this->factory);
+        $resp     = $provider->handle($request, $this->handler, $this->form);
 
-        $this->assertEquals("foo", $resp);
+        $this->assertEquals('foo', $resp);
     }
+
     /**
-     * @covers ::__construct
      * @covers ::handle
      */
     public function testFailure()
     {
-        $handler = $this->getMockForAbstractClass('Hostnet\Component\Form\Simple\FormHandlerMock');
-        $factory = $this->getMockBuilder('Symfony\Component\Form\FormFactoryInterface')->getMock();
-        $form    = $this->getMockBuilder('Symfony\Component\Form\FormInterface')->getMock();
-        $request = $this->getMockBuilder('Symfony\Component\HttpFoundation\Request')->getMock();
+        $request = new Request();
 
-        $form->expects($this->once())
+        $this->form
+            ->expects($this->once())
             ->method('isValid')
             ->willReturn(false);
 
-        $form->expects($this->once())
+        $this->form
+            ->expects($this->once())
             ->method('isSubmitted')
             ->willReturn(true);
 
-        $handler->expects($this->never())
+        $this->handler
+            ->expects($this->never())
             ->method('onSuccess');
 
-        $handler->expects($this->once())
+        $this->handler
+            ->expects($this->once())
             ->method('onFailure')
             ->with($request)
-            ->willReturn("bar");
+            ->willReturn('bar');
 
-        $provider = new SimpleFormProvider($factory);
-        $resp     = $provider->handle($request, $handler, $form);
+        $provider = new SimpleFormProvider($this->factory);
+        $resp     = $provider->handle($request, $this->handler, $this->form);
 
-        $this->assertEquals("bar", $resp);
+        $this->assertEquals('bar', $resp);
     }
 
     /**
-     * @covers ::__construct
      * @covers ::handle
      */
     public function testNotSubmitted()
     {
-        $handler = $this->getMockForAbstractClass('Hostnet\Component\Form\Simple\FormHandlerMock');
-        $factory = $this->getMockBuilder('Symfony\Component\Form\FormFactoryInterface')->getMock();
-        $form    = $this->getMockBuilder('Symfony\Component\Form\FormInterface')->getMock();
-        $request = $this->getMockBuilder('Symfony\Component\HttpFoundation\Request')->getMock();
-
-        $form->expects($this->once())
+        $this->form
+            ->expects($this->once())
             ->method('isSubmitted')
             ->willReturn(false);
 
-        $handler->expects($this->never())
+        $this->handler
+            ->expects($this->never())
             ->method('onSuccess');
-        $handler->expects($this->never())
+        $this->handler
+            ->expects($this->never())
             ->method('onFailure');
 
-        $provider = new SimpleFormProvider($factory);
-        $provider->handle($request, $handler, $form);
+        $provider = new SimpleFormProvider($this->factory);
+        $provider->handle(new Request(), $this->handler, $this->form);
     }
 
     /**
-     * @covers ::__construct
      * @covers ::handle
      */
     public function testNoForm()
     {
-        $handler = $this->getMockForAbstractClass('Hostnet\Component\Form\Simple\FormHandlerMock');
-        $factory = $this->getMockBuilder('Symfony\Component\Form\FormFactoryInterface')->getMock();
-        $request = $this->getMockBuilder('Symfony\Component\HttpFoundation\Request')->getMock();
-        $form    = $this->getMockBuilder('Symfony\Component\Form\FormInterface')->getMock();
-
-        $handler
+        $this->handler
             ->expects($this->once())
-            ->method("getOptions")
+            ->method('getOptions')
             ->willReturn([]);
 
-        $factory
+        $this->factory
             ->expects($this->once())
-            ->method("create")
-            ->willReturn($form);
+            ->method('create')
+            ->willReturn($this->form);
 
-        $handler
+        $this->handler
             ->expects($this->once())
-            ->method("setForm")
-            ->with($form);
+            ->method('setForm')
+            ->with($this->form);
 
-        $provider = new SimpleFormProvider($factory);
-        $provider->handle($request, $handler);
+        $provider = new SimpleFormProvider($this->factory);
+        $provider->handle(new Request(), $this->handler);
     }
 
     /**
-     * @covers ::__construct
      * @covers ::handle
      * @expectedException Hostnet\Component\Form\Exception\FormNotFoundException
      */
     public function testNoFormNotFound()
     {
-        $handler = $this->getMockForAbstractClass('Hostnet\Component\Form\Simple\FormHandlerMock');
-        $factory = $this->getMockBuilder('Symfony\Component\Form\FormFactoryInterface')->getMock();
-        $request = $this->getMockBuilder('Symfony\Component\HttpFoundation\Request')->getMock();
-
-        $handler
+        $this->handler
             ->expects($this->once())
-            ->method("getOptions")
+            ->method('getOptions')
             ->willReturn([]);
 
-        $provider = new SimpleFormProvider($factory);
-        $provider->handle($request, $handler);
+        $provider = new SimpleFormProvider($this->factory);
+        $provider->handle(new Request(), $this->handler);
     }
 
     /**
-     * @covers ::__construct
      * @covers ::handle
      */
     public function testNoHandler()
     {
-        $handler = $this->getMockBuilder('Hostnet\Component\Form\FormInformationInterface')->getMock();
-        $factory = $this->getMockBuilder('Symfony\Component\Form\FormFactoryInterface')->getMock();
-        $form    = $this->getMockBuilder('Symfony\Component\Form\FormInterface')->getMock();
-        $request = $this->getMockBuilder('Symfony\Component\HttpFoundation\Request')->getMock();
-
-        $form->expects($this->once())
+        $this->form
+            ->expects($this->once())
             ->method('isValid')
             ->willReturn(true);
 
-        $form->expects($this->once())
+        $this->form
+            ->expects($this->once())
             ->method('isSubmitted')
             ->willReturn(true);
 
-        $provider = new SimpleFormProvider($factory);
-        $provider->handle($request, $handler, $form);
+        $provider = new SimpleFormProvider($this->factory);
+        $provider->handle(new Request(), $this->handler, $this->form);
+    }
+
+    /**
+     * @covers ::handle
+     */
+    public function testSubmittedWithNoHandlerInterfaces()
+    {
+        $handler = $this->getMock('Hostnet\Component\Form\FormHandlerInterface');
+        $handler
+            ->expects($this->never())
+            ->method('onSuccess');
+        $handler
+            ->expects($this->never())
+            ->method('onFailure');
+
+        $this->form
+            ->expects($this->once())
+            ->method('isSubmitted')
+            ->willReturn(true);
+
+        $provider = new SimpleFormProvider($this->factory);
+        $provider->handle(new Request(), $handler, $this->form);
     }
 }

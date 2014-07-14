@@ -11,9 +11,9 @@ use Symfony\Component\HttpFoundation\Request;
 interface FormProviderInterface
 {
     /**
-     * @param Request                  $request
-     * @param FormInformationInterface $handler
-     * @param FormInterface            $form
+     * @param Request              $request
+     * @param FormHandlerInterface $handler
+     * @param FormInterface        $form
      */
-    public function handle(Request $request, FormInformationInterface $handler, FormInterface $form = null);
+    public function handle(Request $request, FormHandlerInterface $handler, FormInterface $form = null);
 }
