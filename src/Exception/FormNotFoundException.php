@@ -1,7 +1,7 @@
 <?php
 namespace Hostnet\Component\Form\Exception;
 
-use Hostnet\Component\Form\FormInformationInterface;
+use Hostnet\Component\Form\FormHandlerInterface;
 
 /**
  * @author Yannick de Lange <ydelange@hostnet.nl>
@@ -9,9 +9,9 @@ use Hostnet\Component\Form\FormInformationInterface;
 class FormNotFoundException extends \RuntimeException
 {
     /**
-     * @param FormInformationInterface $handler
+     * @param FormHandlerInterface $handler
      */
-    public function __construct(FormInformationInterface $handler)
+    public function __construct(FormHandlerInterface $handler)
     {
         parent::__construct(sprintf(
             "Could not find form for handler %s. Did you forget to set the form?",

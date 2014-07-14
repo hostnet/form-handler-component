@@ -8,7 +8,7 @@ use Symfony\Component\Form\FormTypeInterface;
  * @author Iltar van der Berg <ivanderberg@hostnet.nl>
  * @author Yannick de Lange <ydelange@hostnet.nl>
  */
-interface FormInformationInterface
+interface FormHandlerInterface
 {
     /**
      * @return string|FormTypeInterface

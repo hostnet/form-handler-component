@@ -10,7 +10,7 @@ class FormNotFoundExceptionTest extends \PHPUnit_Framework_TestCase
     public function testConstructor()
     {
         $handler = $this
-            ->getMockBuilder('Hostnet\Component\Form\FormInformationInterface')
+            ->getMockBuilder('Hostnet\Component\Form\FormHandlerInterface')
             ->getMock();
         $e       = new FormNotFoundException($handler);
 

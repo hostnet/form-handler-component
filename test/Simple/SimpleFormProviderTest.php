@@ -152,7 +152,7 @@ class SimpleFormProviderTest extends \PHPUnit_Framework_TestCase
      */
     public function testNoHandler()
     {
-        $handler = $this->getMockBuilder('Hostnet\Component\Form\FormInformationInterface')->getMock();
+        $handler = $this->getMockBuilder('Hostnet\Component\Form\FormHandlerInterface')->getMock();
         $factory = $this->getMockBuilder('Symfony\Component\Form\FormFactoryInterface')->getMock();
         $form    = $this->getMockBuilder('Symfony\Component\Form\FormInterface')->getMock();
         $request = $this->getMockBuilder('Symfony\Component\HttpFoundation\Request')->getMock();

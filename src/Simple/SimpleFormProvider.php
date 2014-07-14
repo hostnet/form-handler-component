@@ -3,7 +3,7 @@ namespace Hostnet\Component\Form\Simple;
 
 use Hostnet\Component\Form\Exception\FormNotFoundException;
 use Hostnet\Component\Form\FormFailureHandlerInterface;
-use Hostnet\Component\Form\FormInformationInterface;
+use Hostnet\Component\Form\FormHandlerInterface;
 use Hostnet\Component\Form\FormProviderInterface;
 use Hostnet\Component\Form\FormSuccesHandlerInterface;
 use Symfony\Component\Form\FormFactoryInterface;
@@ -32,7 +32,7 @@ class SimpleFormProvider implements FormProviderInterface
     /**
      * @see \Hostnet\Component\Form\FormProviderInterface::handle()
      */
-    public function handle(Request $request, FormInformationInterface $handler, FormInterface $form = null)
+    public function handle(Request $request, FormHandlerInterface $handler, FormInterface $form = null)
     {
         if (null !== $form) {
             $handler->setForm($form);
