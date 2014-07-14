@@ -10,6 +10,10 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class SimpleFormProviderTest extends \PHPUnit_Framework_TestCase
 {
+    private $handler;
+    private $factory;
+    private $form;
+
     /**
      * @see PHPUnit_Framework_TestCase::setUp()
      */
