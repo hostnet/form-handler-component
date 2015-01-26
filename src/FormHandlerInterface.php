@@ -7,6 +7,7 @@ use Symfony\Component\Form\FormTypeInterface;
 /**
  * @author Iltar van der Berg <ivanderberg@hostnet.nl>
  * @author Yannick de Lange <ydelange@hostnet.nl>
+ * @deprecated use NamedFormHandlerInterface or AbstractFormHandler
  */
 interface FormHandlerInterface
 {
