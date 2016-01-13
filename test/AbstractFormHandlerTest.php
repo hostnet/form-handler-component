@@ -23,7 +23,7 @@ class AbstractFormHandlerTest extends \PHPUnit_Framework_TestCase
 
         $form = $this->getMock('Symfony\Component\Form\FormInterface');
 
-        $this->assertEquals('foobar', $this->handler->getName());
+        $this->assertEquals(null, $this->handler->getName());
         $this->assertEquals([], $this->handler->getOptions());
         $this->assertSame($form, $this->handler->setForm($form)->getForm());
     }
