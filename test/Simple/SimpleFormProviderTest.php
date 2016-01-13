@@ -127,10 +127,41 @@ class SimpleFormProviderTest extends \PHPUnit_Framework_TestCase
             ->expects($this->once())
             ->method('getOptions')
             ->willReturn([]);
+        $named_handler
+            ->expects($this->once())
+            ->method('getName')
+            ->willReturn('foobar');
 
         $this->factory
             ->expects($this->once())
             ->method('createNamed')
+            ->willReturn($this->form);
+
+        $named_handler
+            ->expects($this->once())
+            ->method('setForm')
+            ->with($this->form);
+
+        $provider = new SimpleFormProvider($this->factory);
+        $provider->handle(new Request(), $named_handler);
+    }
+
+    public function testNamedFormWithNoName()
+    {
+        $named_handler = $this->getMock('Hostnet\Component\Form\NamedFormHandlerInterface');
+
+        $named_handler
+            ->expects($this->once())
+            ->method('getOptions')
+            ->willReturn([]);
+        $named_handler
+            ->expects($this->once())
+            ->method('getName')
+            ->willReturn(null);
+
+        $this->factory
+            ->expects($this->once())
+            ->method('create')
             ->willReturn($this->form);
 
         $named_handler

@@ -18,7 +18,7 @@ abstract class AbstractFormHandler implements NamedFormHandlerInterface
      */
     public function getName()
     {
-        return $this->getType();
+        return null;
     }
 
     /**
