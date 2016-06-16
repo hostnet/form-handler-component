@@ -5,7 +5,7 @@ use Hostnet\Component\Form\Exception\FormNotFoundException;
 use Hostnet\Component\Form\FormFailureHandlerInterface;
 use Hostnet\Component\Form\FormHandlerInterface;
 use Hostnet\Component\Form\FormProviderInterface;
-use Hostnet\Component\Form\FormSuccesHandlerInterface;
+use Hostnet\Component\Form\FormSuccessHandlerInterface;
 use Hostnet\Component\Form\NamedFormHandlerInterface;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
@@ -68,7 +68,7 @@ class SimpleFormProvider implements FormProviderInterface
         }
 
         if ($form->isValid()) {
-            if ($handler instanceof FormSuccesHandlerInterface) {
+            if ($handler instanceof FormSuccessHandlerInterface) {
                 return $handler->onSuccess($request);
             }
         } elseif ($handler instanceof FormFailureHandlerInterface) {

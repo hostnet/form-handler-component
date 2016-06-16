@@ -1,17 +1,18 @@
 <?php
 namespace Hostnet\Component\Form;
 
-use Symfony\Component\HttpFoundation\Request;
+@trigger_error(sprintf(
+    '%s is deprecated, use` %s instead.',
+    FormSuccesHandlerInterface::class,
+    FormSuccessHandlerInterface::class
+), E_USER_DEPRECATED);
 
 /**
  * @author Iltar van der Berg <ivanderberg@hostnet.nl>
  * @author Yannick de Lange <ydelange@hostnet.nl>
+ *
+ * @deprecated Use {@see FormSuccessHandlerInterface} instead.
  */
-interface FormSuccesHandlerInterface
+interface FormSuccesHandlerInterface extends FormSuccessHandlerInterface
 {
-    /**
-     * @param Request $request
-     * @return mixed
-     */
-    public function onSuccess(Request $request);
 }
