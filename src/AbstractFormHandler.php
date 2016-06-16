@@ -14,7 +14,7 @@ abstract class AbstractFormHandler implements NamedFormHandlerInterface
     private $form;
 
     /**
-     * @see \Hostnet\Component\Form\NamedFormHandlerInterface::getName()
+     * {@inheritdoc}
      */
     public function getName()
     {
@@ -22,7 +22,7 @@ abstract class AbstractFormHandler implements NamedFormHandlerInterface
     }
 
     /**
-     * @see \Hostnet\Component\Form\FormHandlerInterface::getOptions()
+     * {@inheritdoc}
      */
     public function getOptions()
     {
@@ -30,7 +30,7 @@ abstract class AbstractFormHandler implements NamedFormHandlerInterface
     }
 
     /**
-     * @see \Hostnet\Component\Form\FormHandlerInterface::getForm()
+     * {@inheritdoc}
      */
     public function getForm()
     {
@@ -38,7 +38,7 @@ abstract class AbstractFormHandler implements NamedFormHandlerInterface
     }
 
     /**
-     * @see \Hostnet\Component\Form\FormHandlerInterface::setForm()
+     * {@inheritdoc}
      */
     public function setForm(FormInterface $form)
     {

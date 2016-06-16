@@ -31,7 +31,7 @@ class SimpleFormProvider implements FormProviderInterface
     }
 
     /**
-     * @see \Hostnet\Component\Form\FormProviderInterface::handle()
+     * {@inheritdoc}
      */
     public function handle(Request $request, FormHandlerInterface $handler, FormInterface $form = null)
     {
@@ -64,7 +64,7 @@ class SimpleFormProvider implements FormProviderInterface
         $form->handleRequest($request);
 
         if (!$form->isSubmitted()) {
-            return;
+            return null;
         }
 
         if ($form->isValid()) {

@@ -1,6 +1,9 @@
 <?php
 namespace Hostnet\Component\Form\Simple;
 
+use Hostnet\Component\Form\AbstractFormHandler;
+use Symfony\Component\Form\FormInterface;
+
 /**
  * @author Yannick de Lange <ydelange@hostnet.nl>
  * @covers Hostnet\Component\Form\AbstractFormHandler
@@ -11,20 +14,20 @@ class AbstractFormHandlerTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->handler = $this->getMockForAbstractClass('Hostnet\Component\Form\AbstractFormHandler');
+        $this->handler = $this->getMockForAbstractClass(AbstractFormHandler::class);
     }
 
     public function testGettersAndSetters()
     {
         $this->handler
-            ->expects($this->any())
+            ->expects(self::any())
             ->method('getType')
             ->willReturn('foobar');
 
-        $form = $this->getMock('Symfony\Component\Form\FormInterface');
+        $form = $this->createMock(FormInterface::class);
 
-        $this->assertEquals(null, $this->handler->getName());
-        $this->assertEquals([], $this->handler->getOptions());
-        $this->assertSame($form, $this->handler->setForm($form)->getForm());
+        self::assertEquals(null, $this->handler->getName());
+        self::assertEquals([], $this->handler->getOptions());
+        self::assertSame($form, $this->handler->setForm($form)->getForm());
     }
 }

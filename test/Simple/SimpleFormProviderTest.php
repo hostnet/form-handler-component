@@ -1,6 +1,10 @@
 <?php
 namespace Hostnet\Component\Form\Simple;
 
+use Hostnet\Component\Form\FormHandlerInterface;
+use Hostnet\Component\Form\NamedFormHandlerInterface;
+use Symfony\Component\Form\FormFactoryInterface;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -15,9 +19,9 @@ class SimpleFormProviderTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->handler = $this->getMock('Hostnet\Component\Form\Simple\FormHandlerMock');
-        $this->factory = $this->getMock('Symfony\Component\Form\FormFactoryInterface');
-        $this->form    = $this->getMock('Symfony\Component\Form\FormInterface');
+        $this->handler = $this->createMock(AbstractFormHandlerMock::class);
+        $this->factory = $this->createMock(FormFactoryInterface::class);
+        $this->form    = $this->createMock(FormInterface::class);
     }
 
     public function testSuccess()
@@ -25,29 +29,29 @@ class SimpleFormProviderTest extends \PHPUnit_Framework_TestCase
         $request = new Request();
 
         $this->form
-            ->expects($this->once())
+            ->expects(self::once())
             ->method('isValid')
             ->willReturn(true);
 
         $this->form
-            ->expects($this->once())
+            ->expects(self::once())
             ->method('isSubmitted')
             ->willReturn(true);
 
         $this->handler
-            ->expects($this->once())
+            ->expects(self::once())
             ->method('onSuccess')
             ->with($request)
             ->willReturn('foo');
 
         $this->handler
-            ->expects($this->never())
+            ->expects(self::never())
             ->method('onFailure');
 
         $provider = new SimpleFormProvider($this->factory);
         $resp     = $provider->handle($request, $this->handler, $this->form);
 
-        $this->assertEquals('foo', $resp);
+        self::assertEquals('foo', $resp);
     }
 
     public function testFailure()
@@ -55,21 +59,21 @@ class SimpleFormProviderTest extends \PHPUnit_Framework_TestCase
         $request = new Request();
 
         $this->form
-            ->expects($this->once())
+            ->expects(self::once())
             ->method('isValid')
             ->willReturn(false);
 
         $this->form
-            ->expects($this->once())
+            ->expects(self::once())
             ->method('isSubmitted')
             ->willReturn(true);
 
         $this->handler
-            ->expects($this->never())
+            ->expects(self::never())
             ->method('onSuccess');
 
         $this->handler
-            ->expects($this->once())
+            ->expects(self::once())
             ->method('onFailure')
             ->with($request)
             ->willReturn('bar');
@@ -77,21 +81,21 @@ class SimpleFormProviderTest extends \PHPUnit_Framework_TestCase
         $provider = new SimpleFormProvider($this->factory);
         $resp     = $provider->handle($request, $this->handler, $this->form);
 
-        $this->assertEquals('bar', $resp);
+        self::assertEquals('bar', $resp);
     }
 
     public function testNotSubmitted()
     {
         $this->form
-            ->expects($this->once())
+            ->expects(self::once())
             ->method('isSubmitted')
             ->willReturn(false);
 
         $this->handler
-            ->expects($this->never())
+            ->expects(self::never())
             ->method('onSuccess');
         $this->handler
-            ->expects($this->never())
+            ->expects(self::never())
             ->method('onFailure');
 
         $provider = new SimpleFormProvider($this->factory);
@@ -101,17 +105,17 @@ class SimpleFormProviderTest extends \PHPUnit_Framework_TestCase
     public function testNoForm()
     {
         $this->handler
-            ->expects($this->once())
+            ->expects(self::once())
             ->method('getOptions')
             ->willReturn([]);
 
         $this->factory
-            ->expects($this->once())
+            ->expects(self::once())
             ->method('create')
             ->willReturn($this->form);
 
         $this->handler
-            ->expects($this->once())
+            ->expects(self::once())
             ->method('setForm')
             ->with($this->form);
 
@@ -121,24 +125,24 @@ class SimpleFormProviderTest extends \PHPUnit_Framework_TestCase
 
     public function testNamedForm()
     {
-        $named_handler = $this->getMock('Hostnet\Component\Form\NamedFormHandlerInterface');
+        $named_handler = $this->createMock(NamedFormHandlerInterface::class);
 
         $named_handler
-            ->expects($this->once())
+            ->expects(self::once())
             ->method('getOptions')
             ->willReturn([]);
         $named_handler
-            ->expects($this->once())
+            ->expects(self::once())
             ->method('getName')
             ->willReturn('foobar');
 
         $this->factory
-            ->expects($this->once())
+            ->expects(self::once())
             ->method('createNamed')
             ->willReturn($this->form);
 
         $named_handler
-            ->expects($this->once())
+            ->expects(self::once())
             ->method('setForm')
             ->with($this->form);
 
@@ -148,24 +152,24 @@ class SimpleFormProviderTest extends \PHPUnit_Framework_TestCase
 
     public function testNamedFormWithNoName()
     {
-        $named_handler = $this->getMock('Hostnet\Component\Form\NamedFormHandlerInterface');
+        $named_handler = $this->createMock(NamedFormHandlerInterface::class);
 
         $named_handler
-            ->expects($this->once())
+            ->expects(self::once())
             ->method('getOptions')
             ->willReturn([]);
         $named_handler
-            ->expects($this->once())
+            ->expects(self::once())
             ->method('getName')
             ->willReturn(null);
 
         $this->factory
-            ->expects($this->once())
+            ->expects(self::once())
             ->method('create')
             ->willReturn($this->form);
 
         $named_handler
-            ->expects($this->once())
+            ->expects(self::once())
             ->method('setForm')
             ->with($this->form);
 
@@ -174,12 +178,12 @@ class SimpleFormProviderTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException Hostnet\Component\Form\Exception\FormNotFoundException
+     * @expectedException \Hostnet\Component\Form\Exception\FormNotFoundException
      */
     public function testNoFormNotFound()
     {
         $this->handler
-            ->expects($this->once())
+            ->expects(self::once())
             ->method('getOptions')
             ->willReturn([]);
 
@@ -190,12 +194,12 @@ class SimpleFormProviderTest extends \PHPUnit_Framework_TestCase
     public function testNoHandler()
     {
         $this->form
-            ->expects($this->once())
+            ->expects(self::once())
             ->method('isValid')
             ->willReturn(true);
 
         $this->form
-            ->expects($this->once())
+            ->expects(self::once())
             ->method('isSubmitted')
             ->willReturn(true);
 
@@ -205,16 +209,10 @@ class SimpleFormProviderTest extends \PHPUnit_Framework_TestCase
 
     public function testSubmittedWithNoHandlerInterfaces()
     {
-        $handler = $this->getMock('Hostnet\Component\Form\FormHandlerInterface');
-        $handler
-            ->expects($this->never())
-            ->method('onSuccess');
-        $handler
-            ->expects($this->never())
-            ->method('onFailure');
+        $handler = $this->createMock(FormHandlerInterface::class);
 
         $this->form
-            ->expects($this->once())
+            ->expects(self::once())
             ->method('isSubmitted')
             ->willReturn(true);
 
