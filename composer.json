@@ -13,12 +13,15 @@
         }
     ],
     "require": {
-        "php":                     "^5.5|^7.0",
-        "symfony/form":            "^2.7|^3.0",
-        "symfony/http-foundation": "^2.7|^3.0"
+        "php":                     "^5.6||^7.0",
+        "symfony/form":            "^2.7||^3.0",
+        "symfony/http-foundation": "^2.7||^3.0"
     },
     "require-dev": {
-        "phpunit/phpunit": "^4.7|^5.0"
+        "hostnet/phpcs-tool":     "^4.0.8",
+        "phpunit/phpunit":        "^5.4",
+        "symfony/debug":          "^2.7||^3.0",
+        "symfony/phpunit-bridge": "^2.7||^3.0"
     },
     "minimum-stability": "stable",
     "autoload": {
