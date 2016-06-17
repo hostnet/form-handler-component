@@ -2,7 +2,7 @@
 namespace Hostnet\Component\Form;
 
 @trigger_error(sprintf(
-    '%s is deprecated, use` %s instead.',
+    '%s is deprecated, use %s instead.',
     FormSuccesHandlerInterface::class,
     FormSuccessHandlerInterface::class
 ), E_USER_DEPRECATED);
