@@ -1,6 +1,7 @@
 <?php
 namespace Hostnet\Component\Form;
 
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -13,5 +14,5 @@ interface FormFailureHandlerInterface
      * @param Request $request
      * @return mixed
      */
-    public function onFailure(Request $request);
+    public function onFailure(Request $request, FormInterface $form);
 }

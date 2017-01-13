@@ -33,7 +33,7 @@ class SimpleFormProvider implements FormProviderInterface
     /**
      * {@inheritdoc}
      */
-    public function handle(Request $request, FormHandlerInterface $handler, FormInterface $form = null)
+    public function handle(Request $request, FormHandlerInterface $handler, FormInterface $form = null, $data = null)
     {
         if (null !== $form) {
             $handler->setForm($form);
@@ -42,13 +42,13 @@ class SimpleFormProvider implements FormProviderInterface
                 $form = $this->form_factory->createNamed(
                     $name,
                     $handler->getType(),
-                    $handler->getData(),
+                    $data ?: $handler->getData(),
                     $handler->getOptions()
                 );
             } else {
                 $form = $this->form_factory->create(
                     $handler->getType(),
-                    $handler->getData(),
+                    $data ?: $handler->getData(),
                     $handler->getOptions()
                 );
             }
@@ -69,10 +69,10 @@ class SimpleFormProvider implements FormProviderInterface
 
         if ($form->isValid()) {
             if ($handler instanceof FormSuccessHandlerInterface) {
-                return $handler->onSuccess($request);
+                return $handler->onSuccess($request, $form);
             }
         } elseif ($handler instanceof FormFailureHandlerInterface) {
-            return $handler->onFailure($request);
+            return $handler->onFailure($request, $form);
         }
     }
 }

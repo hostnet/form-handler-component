@@ -10,6 +10,7 @@ abstract class AbstractFormHandler implements NamedFormHandlerInterface
 {
     /**
      * @var FormInterface
+     * @deprecated since 1.4 and to be removed in 2.0.
      */
     private $form;
 
