@@ -17,6 +17,7 @@ interface FormHandlerInterface
 
     /**
      * @return mixed
+     * @deprecated deprecated since 1.4 and to be removed in 2.0. Pass data as a parameter into the handle function instead
      */
     public function getData();
 
@@ -27,11 +28,13 @@ interface FormHandlerInterface
 
     /**
      * @return FormInterface
+     * @deprecated deprecated since 1.4 and to be removed in 2.0. Pass form as a parameter into the handle function instead
      */
     public function getForm();
 
     /**
      * @param FormInterface $form
+     * @deprecated deprecated since 1.4 and to be removed in 2.0. Pass form as a parameter into the handle function instead
      */
     public function setForm(FormInterface $form);
 }

@@ -14,6 +14,7 @@ interface FormProviderInterface
      * @param Request              $request
      * @param FormHandlerInterface $handler
      * @param FormInterface        $form
+     * @param mixed                $data initial data for a form if needed
      */
-    public function handle(Request $request, FormHandlerInterface $handler, FormInterface $form = null);
+    public function handle(Request $request, FormHandlerInterface $handler, FormInterface $form = null, $data);
 }
