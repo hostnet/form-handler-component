@@ -9,9 +9,6 @@ cache:
 env:
   - COMPOSER_FLAGS="--prefer-stable"
 
-php:
-  - hhvm
-
 matrix:
   include:
     - php: 5.6
