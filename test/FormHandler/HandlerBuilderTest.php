@@ -7,6 +7,7 @@ use Hostnet\Component\FormHandler\Fixtures\ActionSubscriber\SuccessSubscriber;
 use Hostnet\Component\FormHandler\Fixtures\TestType;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Form\FormTypeInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -202,5 +203,34 @@ class HandlerBuilderTest extends \PHPUnit_Framework_TestCase
     {
         $builder = new HandlerBuilder();
         $builder->registerActionSubscriber(new HenkSubscriber());
+    }
+
+    /**
+     * @dataProvider providerBuildInvalidHandlerType
+     * @expectedException \Hostnet\Component\FormHandler\Exception\InvalidHandlerTypeException
+     */
+    public function testBuildInvalidHandlerType($type)
+    {
+        $request      = Request::create('/', 'POST');
+        $form_factory = $this->prophesize(FormFactoryInterface::class);
+
+        $form = $this->prophesize(FormInterface::class);
+        $form->handleRequest($request)->shouldNotBeCalled();
+
+        $form_factory->create(TestType::class, null, [])->willReturn($form);
+
+        $builder = new HandlerBuilder();
+        $builder->setType($type);
+
+        $handler = $builder->build($form_factory->reveal());
+        $handler->process($request);
+    }
+
+    public function providerBuildInvalidHandlerType()
+    {
+        return [
+            [600],
+            [\Exception::class]
+        ];
     }
 }
