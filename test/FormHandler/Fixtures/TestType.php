@@ -19,4 +19,13 @@ class TestType extends AbstractType
             'data_class' => TestData::class
         ]);
     }
+
+    /**
+     * Backward compatibility for Symfony FormTypeInterface
+     * @deprecated
+     */
+    public function getName()
+    {
+        return '';
+    }
 }
