@@ -5,6 +5,8 @@ use Hostnet\Component\FormHandler\Fixtures\ActionSubscriber\FailureSubscriber;
 use Hostnet\Component\FormHandler\Fixtures\ActionSubscriber\HenkSubscriber;
 use Hostnet\Component\FormHandler\Fixtures\ActionSubscriber\SuccessSubscriber;
 use Hostnet\Component\FormHandler\Fixtures\TestType;
+use Prophecy\Argument;
+use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormTypeInterface;
@@ -232,5 +234,27 @@ class HandlerBuilderTest extends \PHPUnit_Framework_TestCase
             [600],
             [\Exception::class]
         ];
+    }
+    
+    public function testBuildWithCustomFormSubmitProcessor()
+    {
+        $success = false;
+        $builder = new HandlerBuilder();
+        $builder->setFormSubmitProcessor(function () use (&$success) {
+            $success = true;
+        });
+
+        $form = $this->prophesize(FormInterface::class);
+        $form->handleRequest(Argument::cetera())->shouldNotBeCalled();
+        $form->isSubmitted()->shouldBeCalled()->willReturn(false);
+
+        $form_factory = $this->prophesize(FormFactoryInterface::class);
+        $form_factory->create(FormType::class, null, [])->willReturn($form);
+
+        $handler = $builder->build($form_factory->reveal());
+        $request = Request::create('/', 'POST');
+
+        self::assertNull($handler->process($request));
+        self::assertTrue($success);
     }
 }

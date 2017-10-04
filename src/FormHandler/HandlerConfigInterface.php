@@ -52,6 +52,18 @@ interface HandlerConfigInterface
     public function onFailure(callable $callback);
 
     /**
+     * Register the FormSubmitProcessor.
+     *
+     * This will overwrite the default FormSubmitProcessor.
+     *
+     * signature:
+     * function (FormInterface $form, Request $request): void;
+     *
+     * @param callable $callback
+     */
+    public function setFormSubmitProcessor(callable $callback);
+
+    /**
      * Register an action subscriber. If an unknown action is given, a
      * UnknownSubscribedActionException is thrown.
      *

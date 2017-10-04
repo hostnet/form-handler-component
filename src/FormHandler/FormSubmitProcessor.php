@@ -27,18 +27,26 @@ final class FormSubmitProcessor
     private $on_failure;
 
     /**
+     * @var callable
+     */
+    private $form_submit_processor;
+
+    /**
      * @param FormInterface $form
      * @param callable|null $on_success
      * @param callable|null $on_failure
+     * @param callable|null $form_submit_processor
      */
     public function __construct(
         FormInterface $form,
         callable $on_success = null,
-        callable $on_failure = null
+        callable $on_failure = null,
+        callable $form_submit_processor = null
     ) {
-        $this->on_success = $on_success;
-        $this->on_failure = $on_failure;
-        $this->form       = $form;
+        $this->form                  = $form;
+        $this->on_success            = $on_success;
+        $this->on_failure            = $on_failure;
+        $this->form_submit_processor = $form_submit_processor;
     }
 
     /**
@@ -55,7 +63,11 @@ final class FormSubmitProcessor
      */
     public function process(Request $request)
     {
-        $this->form->handleRequest($request);
+        if (is_callable($this->form_submit_processor)) {
+            call_user_func($this->form_submit_processor, $this->form, $request);
+        } else {
+            $this->form->handleRequest($request);
+        }
 
         if (!$this->form->isSubmitted()) {
             return null;

@@ -17,6 +17,7 @@ final class HandlerBuilder implements HandlerConfigInterface
     private $options = [];
     private $on_success;
     private $on_failure;
+    private $form_submit_processor;
 
     /**
      * {@inheritdoc}
@@ -56,6 +57,14 @@ final class HandlerBuilder implements HandlerConfigInterface
     public function onFailure(callable $callback)
     {
         $this->on_failure = $callback;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setFormSubmitProcessor(callable $callback)
+    {
+        $this->form_submit_processor = $callback;
     }
 
     /**
@@ -114,6 +123,6 @@ final class HandlerBuilder implements HandlerConfigInterface
             $form = $form_factory->create($this->type, $data, $options);
         }
 
-        return new FormSubmitProcessor($form, $this->on_success, $this->on_failure);
+        return new FormSubmitProcessor($form, $this->on_success, $this->on_failure, $this->form_submit_processor);
     }
 }
