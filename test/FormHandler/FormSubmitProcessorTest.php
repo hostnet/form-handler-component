@@ -1,6 +1,7 @@
 <?php
 namespace Hostnet\Component\FormHandler;
 
+use Prophecy\Argument;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -102,5 +103,25 @@ class FormSubmitProcessorTest extends \PHPUnit_Framework_TestCase
         $this->form->getData()->willReturn([]);
 
         self::assertNull($form_submit_processor->process($request));
+    }
+
+    public function testProcess()
+    {
+        $success = false;
+
+        $this->form->handleRequest(Argument::cetera())->shouldNotBeCalled();
+        $this->form->isSubmitted()->willReturn(false);
+
+        $form_submit_processor = new FormSubmitProcessor(
+            $this->form->reveal(),
+            null,
+            null,
+            function () use (&$success) {
+                $success = true;
+            }
+        );
+
+        self::assertNull($form_submit_processor->process(Request::create('/', 'POST')));
+        self::assertTrue($success);
     }
 }
