@@ -1,11 +1,9 @@
 <?php
 namespace Hostnet\Component\FormHandler;
 
-use Hostnet\Component\FormHandler\Exception\InvalidHandlerTypeException;
 use Hostnet\Component\FormHandler\Exception\UnknownSubscribedActionException;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\FormFactoryInterface;
-use Symfony\Component\Form\FormTypeInterface;
 
 /**
  * Allows for configuring and creating HandlerInterface instances.
@@ -101,20 +99,10 @@ final class HandlerBuilder implements HandlerConfigInterface
      *
      * @param FormFactoryInterface $form_factory
      * @param mixed                $data
-     * @throws InvalidHandlerTypeException
      * @return FormSubmitProcessor
      */
     public function build(FormFactoryInterface $form_factory, $data = null)
     {
-        if (! is_string($this->type) || ! is_subclass_of($this->type, FormTypeInterface::class)) {
-            throw new InvalidHandlerTypeException(
-                sprintf(
-                    'Handler type expected FormTypeInterface got %s isn\'t valid.',
-                    $this->type
-                )
-            );
-        }
-
         $options = is_callable($this->options) ? call_user_func($this->options, $data) : $this->options;
 
         if (null !== $this->name) {
