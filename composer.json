@@ -14,16 +14,17 @@
     ],
     "require": {
         "php":                     "^5.6||^7.0",
-        "symfony/form":            "^2.7||^3.0",
-        "symfony/http-foundation": "^2.7||^3.0"
+        "symfony/form":            "^2.7||^3.0||^4.0",
+        "symfony/http-foundation": "^2.7||^3.0||^4.0"
     },
     "require-dev": {
         "hostnet/phpcs-tool":     "^4.1",
         "phpunit/phpunit":        "^5.4",
-        "symfony/debug":          "^2.7||^3.0",
-        "symfony/phpunit-bridge": "^2.7||^3.0"
+        "symfony/debug":          "^2.7||^3.0||^4.0",
+        "symfony/phpunit-bridge": "^2.7||^3.0||^4.0"
     },
-    "minimum-stability": "stable",
+    "minimum-stability": "dev",
+    "prefer-stable": true,
     "autoload": {
         "psr-4": {
             "Hostnet\\Component\\": "src/"
