@@ -1,4 +1,7 @@
 <?php
+/**
+ * @copyright 2017 Hostnet B.V.
+ */
 namespace Hostnet\Component\Form;
 
 use Symfony\Component\HttpFoundation\Request;

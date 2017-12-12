@@ -1,4 +1,7 @@
 <?php
+/**
+ * @copyright 2017 Hostnet B.V.
+ */
 namespace Hostnet\Component\FormHandler\Fixtures\Legacy;
 
 use Hostnet\Component\Form\AbstractFormHandler;
@@ -9,7 +12,9 @@ use Hostnet\Component\FormHandler\Fixtures\TestType;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
-class LegacyFormVariableOptionsHandler extends AbstractFormHandler implements FormSuccessHandlerInterface, FormFailureHandlerInterface
+class LegacyFormVariableOptionsHandler extends AbstractFormHandler implements
+    FormSuccessHandlerInterface,
+    FormFailureHandlerInterface
 {
     private $data;
 

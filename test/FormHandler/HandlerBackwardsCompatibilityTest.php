@@ -1,4 +1,7 @@
 <?php
+/**
+ * @copyright 2017 Hostnet B.V.
+ */
 namespace Hostnet\Component\FormHandler;
 
 use Hostnet\Component\FormHandler\Fixtures\Legacy\LegacyFormHandler;

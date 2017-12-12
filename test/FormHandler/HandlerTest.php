@@ -1,4 +1,7 @@
 <?php
+/**
+ * @copyright 2017 Hostnet B.V.
+ */
 namespace Hostnet\Component\FormHandler;
 
 use Hostnet\Component\FormHandler\Fixtures\ArrayHandlerRegistry;
@@ -42,7 +45,8 @@ class HandlerTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @expectedException \BadMethodCallException
-     * @expectedExceptionMessage Attempted to call an undefined method named "getData" of class "Hostnet\Component\FormHandler\Handler".
+     * @expectedExceptionMessage Attempted to call an undefined method
+     *                           named "getData" of class "Hostnet\Component\FormHandler\Handler".
      */
     public function testCall()
     {
