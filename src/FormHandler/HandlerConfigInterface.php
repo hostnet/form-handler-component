@@ -36,6 +36,9 @@ interface HandlerConfigInterface
      * Note: this method is called before form submission, so the data contains
      * the bind data from your controller. NOT the submitted data.
      *
+     * Signature when using a callback:
+     * function (mixed $data): array;
+     *
      * @param array|callable $options
      */
     public function setOptions($options);
@@ -43,12 +46,18 @@ interface HandlerConfigInterface
     /**
      * Register the on success action.
      *
+     * Signature:
+     * function (mixed $data, FormInterface $form, Request $request): void;
+     *
      * @param callable $callback
      */
     public function onSuccess(callable $callback);
 
     /**
      * Register the on failure action.
+     *
+     * Signature:
+     * function (mixed $data, FormInterface $form, Request $request): void;
      *
      * @param callable $callback
      */
@@ -59,7 +68,7 @@ interface HandlerConfigInterface
      *
      * This will overwrite the default FormSubmitProcessor.
      *
-     * signature:
+     * Signature:
      * function (FormInterface $form, Request $request): void;
      *
      * @param callable $callback
