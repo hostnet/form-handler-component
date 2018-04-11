@@ -67,7 +67,8 @@ final class FormSubmitProcessor
     public function process(Request $request)
     {
         if (is_callable($this->form_submit_processor)) {
-            call_user_func($this->form_submit_processor, $this->form, $request);
+            $form_submit_processor = $this->form_submit_processor;
+            $form_submit_processor($this->form, $request);
         } else {
             $this->form->handleRequest($request);
         }
@@ -78,10 +79,12 @@ final class FormSubmitProcessor
 
         if ($this->form->isValid()) {
             if (is_callable($this->on_success)) {
-                return call_user_func($this->on_success, $this->form->getData(), $this->form, $request);
+                $on_success = $this->on_success;
+                return $on_success($this->form->getData(), $this->form, $request);
             }
         } elseif (is_callable($this->on_failure)) {
-            return call_user_func($this->on_failure, $this->form->getData(), $this->form, $request);
+            $on_failure = $this->on_failure;
+            return $on_failure($this->form->getData(), $this->form, $request);
         }
     }
 }

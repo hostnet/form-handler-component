@@ -14,8 +14,7 @@ use Symfony\Component\HttpFoundation\Request;
 class FormSubmitProcessorTest extends \PHPUnit_Framework_TestCase
 {
     private $form;
-    private $on_success;
-    private $on_failure;
+    private $on_process;
 
     /**
      * @var FormSubmitProcessor
@@ -25,22 +24,87 @@ class FormSubmitProcessorTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->form       = $this->prophesize(FormInterface::class);
-        $this->on_success = false;
-        $this->on_failure = false;
+        $this->on_process = false;
 
         $this->form_submit_processor = new FormSubmitProcessor(
             $this->form->reveal(),
             function () {
-                $this->on_success = true;
-
                 return 'success';
             },
             function () {
-                $this->on_failure = true;
-
                 return 'failure';
             }
         );
+    }
+
+    public function callbackFailure()
+    {
+        return 'failure';
+    }
+
+    public function callbackSuccess()
+    {
+        return 'success';
+    }
+
+    public function callbackProcess()
+    {
+        $this->on_process = true;
+    }
+
+    public function testFailureWithArrayCallables()
+    {
+        $processor = new FormSubmitProcessor(
+            $this->form->reveal(),
+            [$this, 'callbackSuccess'],
+            [$this, 'callbackFailure']
+        );
+
+        $request = Request::create('/', 'POST');
+
+        $this->form->handleRequest($request)->shouldBeCalled();
+        $this->form->isSubmitted()->willReturn(true);
+        $this->form->isValid()->willReturn(false);
+        $this->form->getData()->willReturn([]);
+
+        self::assertSame('failure', $processor->process($request));
+    }
+
+    public function testSuccessWithArrayCallables()
+    {
+        $processor = new FormSubmitProcessor(
+            $this->form->reveal(),
+            [$this, 'callbackSuccess'],
+            [$this, 'callbackFailure']
+        );
+
+        $request = Request::create('/', 'POST');
+
+        $this->form->handleRequest($request)->shouldBeCalled();
+        $this->form->isSubmitted()->willReturn(true);
+        $this->form->isValid()->willReturn(true);
+        $this->form->getData()->willReturn([]);
+
+        self::assertSame('success', $processor->process($request));
+    }
+
+    public function testProcessorWithArray()
+    {
+        $processor = new FormSubmitProcessor(
+            $this->form->reveal(),
+            [$this, 'callbackSuccess'],
+            [$this, 'callbackFailure'],
+            [$this, 'callbackProcess']
+        );
+
+        $request = Request::create('/', 'POST');
+
+        $this->form->isSubmitted()->willReturn(true);
+        $this->form->isValid()->willReturn(true);
+        $this->form->getData()->willReturn([]);
+
+        self::assertSame('success', $processor->process($request));
+        self::assertTrue($this->on_process);
     }
 
     public function testGetForm()
@@ -110,8 +174,6 @@ class FormSubmitProcessorTest extends \PHPUnit_Framework_TestCase
 
     public function testProcess()
     {
-        $success = false;
-
         $this->form->handleRequest(Argument::cetera())->shouldNotBeCalled();
         $this->form->isSubmitted()->willReturn(false);
 
@@ -119,12 +181,12 @@ class FormSubmitProcessorTest extends \PHPUnit_Framework_TestCase
             $this->form->reveal(),
             null,
             null,
-            function () use (&$success) {
-                $success = true;
+            function () {
+                $this->on_process = true;
             }
         );
 
         self::assertNull($form_submit_processor->process(Request::create('/', 'POST')));
-        self::assertTrue($success);
+        self::assertTrue($this->on_process);
     }
 }
