@@ -14,7 +14,7 @@ namespace Hostnet\Component\Form;
  * @author Iltar van der Berg <ivanderberg@hostnet.nl>
  * @author Yannick de Lange <ydelange@hostnet.nl>
  *
- * @deprecated Use {@see FormSuccessHandlerInterface} instead.
+ * @deprecated Use the HandlerConfigInterface instead. Will be removed in version 2.0.
  */
 interface FormSuccesHandlerInterface extends FormSuccessHandlerInterface
 {

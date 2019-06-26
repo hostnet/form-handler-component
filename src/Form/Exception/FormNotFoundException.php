@@ -8,6 +8,8 @@ use Hostnet\Component\Form\FormHandlerInterface;
 
 /**
  * @author Yannick de Lange <ydelange@hostnet.nl>
+ *
+ * @deprecated Use the class InvalidHandlerTypeException instead. Will be removed in version 2.0.
  */
 class FormNotFoundException extends \RuntimeException
 {
