@@ -14,6 +14,8 @@ use Symfony\Component\HttpFoundation\Request;
 /**
  * Wrapper class around the old FormHandlerInterface classes. This provides the
  * BC layer so they can be used with the new handler factory.
+ *
+ * @deprecated Support for FormHandlerInterface will be removed in version 2.0.
  */
 final class HandlerTypeAdapter implements HandlerTypeInterface
 {

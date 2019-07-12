@@ -8,6 +8,8 @@ use Symfony\Component\Form\FormInterface;
 
 /**
  * @author Yannick de Lange <ydelange@hostnet.nl>
+ *
+ * @deprecated Use the HandlerTypeInterface instead. Will be removed in version 2.0.
  */
 abstract class AbstractFormHandler implements NamedFormHandlerInterface
 {
