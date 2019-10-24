@@ -10,6 +10,7 @@ use Hostnet\Component\Form\Exception\FormNotFoundException;
 use Hostnet\Component\Form\FormHandlerInterface;
 use Hostnet\Component\Form\NamedFormHandlerInterface;
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -125,6 +126,11 @@ class SimpleFormProviderTest extends TestCase
             ->method('setForm')
             ->with($this->form);
 
+        $this->handler
+            ->expects(self::once())
+            ->method('getType')
+            ->willReturn(FormType::class);
+
         $provider = new SimpleFormProvider($this->factory);
         $provider->handle(new Request(), $this->handler);
     }
@@ -151,6 +157,11 @@ class SimpleFormProviderTest extends TestCase
             ->expects(self::once())
             ->method('setForm')
             ->with($this->form);
+
+        $named_handler
+            ->expects(self::once())
+            ->method('getType')
+            ->willReturn(FormType::class);
 
         $provider = new SimpleFormProvider($this->factory);
         $provider->handle(new Request(), $named_handler);
@@ -179,6 +190,11 @@ class SimpleFormProviderTest extends TestCase
             ->method('setForm')
             ->with($this->form);
 
+        $named_handler
+            ->expects(self::once())
+            ->method('getType')
+            ->willReturn(FormType::class);
+
         $provider = new SimpleFormProvider($this->factory);
         $provider->handle(new Request(), $named_handler);
     }
@@ -189,6 +205,11 @@ class SimpleFormProviderTest extends TestCase
             ->expects(self::once())
             ->method('getOptions')
             ->willReturn([]);
+
+        $this->handler
+            ->expects(self::any())
+            ->method('getType')
+            ->willReturn(FormType::class);
 
         $provider = new SimpleFormProvider($this->factory);
 
