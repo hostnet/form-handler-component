@@ -2,17 +2,19 @@
 /**
  * @copyright 2017 Hostnet B.V.
  */
+declare(strict_types=1);
+
 namespace Hostnet\Component\Form\Exception;
 
 use Hostnet\Component\Form\FormHandlerInterface;
+use PHPUnit\Framework\TestCase;
 
 /**
- * @author Yannick de Lange <ydelange@hostnet.nl>
- * @covers Hostnet\Component\Form\Exception\FormNotFoundException
+ * @covers \Hostnet\Component\Form\Exception\FormNotFoundException
  */
-class FormNotFoundExceptionTest extends \PHPUnit_Framework_TestCase
+class FormNotFoundExceptionTest extends TestCase
 {
-    public function testConstructor()
+    public function testConstructor(): void
     {
         $handler = $this->createMock(FormHandlerInterface::class);
 

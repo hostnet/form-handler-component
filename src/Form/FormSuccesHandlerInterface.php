@@ -2,6 +2,8 @@
 /**
  * @copyright 2017 Hostnet B.V.
  */
+declare(strict_types=1);
+
 namespace Hostnet\Component\Form;
 
 @trigger_error(sprintf(
@@ -11,9 +13,6 @@ namespace Hostnet\Component\Form;
 ), E_USER_DEPRECATED);
 
 /**
- * @author Iltar van der Berg <ivanderberg@hostnet.nl>
- * @author Yannick de Lange <ydelange@hostnet.nl>
- *
  * @deprecated Use {@see FormSuccessHandlerInterface} instead.
  */
 interface FormSuccesHandlerInterface extends FormSuccessHandlerInterface

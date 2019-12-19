@@ -2,6 +2,8 @@
 /**
  * @copyright 2017 Hostnet B.V.
  */
+declare(strict_types=1);
+
 namespace Hostnet\Component\FormHandler;
 
 use Hostnet\Component\FormHandler\Fixtures\Legacy\LegacyFormHandler;
@@ -9,6 +11,7 @@ use Hostnet\Component\FormHandler\Fixtures\Legacy\LegacyFormVariableOptionsHandl
 use Hostnet\Component\FormHandler\Fixtures\LegacyHandlerRegistry;
 use Hostnet\Component\FormHandler\Fixtures\TestData;
 use Hostnet\Component\FormHandler\Fixtures\TestType;
+use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\Test\FormInterface;
@@ -19,9 +22,9 @@ use Symfony\Component\HttpFoundation\Request;
  * @group legacy
  * @coversNothing
  */
-class HandlerBackwardsCompatibilityTest extends \PHPUnit_Framework_TestCase
+class HandlerBackwardsCompatibilityTest extends TestCase
 {
-    public function testGet()
+    public function testGet(): void
     {
         $request         = Request::create('/', 'GET');
         $form_factory    = $this->prophesize(FormFactoryInterface::class);
@@ -39,7 +42,7 @@ class HandlerBackwardsCompatibilityTest extends \PHPUnit_Framework_TestCase
         self::assertNull($handler_factory->create(LegacyFormHandler::class)->handle($request, $data));
     }
 
-    public function testGetOptions()
+    public function testGetOptions(): void
     {
         $request         = Request::create('/', 'GET');
         $form_factory    = $this->prophesize(FormFactoryInterface::class);
@@ -59,7 +62,7 @@ class HandlerBackwardsCompatibilityTest extends \PHPUnit_Framework_TestCase
         self::assertNull($handler_factory->create(LegacyFormVariableOptionsHandler::class)->handle($request, $data));
     }
 
-    public function testGetData()
+    public function testGetData(): void
     {
         $form_factory    = $this->prophesize(FormFactoryInterface::class);
         $handler_factory = new HandlerFactory(
@@ -72,7 +75,7 @@ class HandlerBackwardsCompatibilityTest extends \PHPUnit_Framework_TestCase
         self::assertInstanceOf(TestData::class, $handler->getData());
     }
 
-    public function testPostSuccess()
+    public function testPostSuccess(): void
     {
         $request         = Request::create('/', 'POST');
         $form_factory    = $this->prophesize(FormFactoryInterface::class);
@@ -97,7 +100,7 @@ class HandlerBackwardsCompatibilityTest extends \PHPUnit_Framework_TestCase
         self::assertSame('http://success.nl/foobar', $resp->getTargetUrl());
     }
 
-    public function testPostFailure()
+    public function testPostFailure(): void
     {
         $request         = Request::create('/', 'POST');
         $form_factory    = $this->prophesize(FormFactoryInterface::class);

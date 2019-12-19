@@ -2,12 +2,16 @@
 /**
  * @copyright 2017 Hostnet B.V.
  */
+declare(strict_types=1);
+
 namespace Hostnet\Component\FormHandler;
 
+use Hostnet\Component\FormHandler\Exception\UnknownSubscribedActionException;
 use Hostnet\Component\FormHandler\Fixtures\ActionSubscriber\FailureSubscriber;
 use Hostnet\Component\FormHandler\Fixtures\ActionSubscriber\HenkSubscriber;
 use Hostnet\Component\FormHandler\Fixtures\ActionSubscriber\SuccessSubscriber;
 use Hostnet\Component\FormHandler\Fixtures\TestType;
+use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\FormFactoryInterface;
@@ -17,9 +21,9 @@ use Symfony\Component\HttpFoundation\Request;
 /**
  * @covers \Hostnet\Component\FormHandler\HandlerBuilder
  */
-class HandlerBuilderTest extends \PHPUnit_Framework_TestCase
+class HandlerBuilderTest extends TestCase
 {
-    public function testSetName()
+    public function testSetName(): void
     {
         $request      = Request::create('/', 'POST');
         $form_factory = $this->prophesize(FormFactoryInterface::class);
@@ -40,7 +44,7 @@ class HandlerBuilderTest extends \PHPUnit_Framework_TestCase
         $handler->process($request);
     }
 
-    public function testSetOptions()
+    public function testSetOptions(): void
     {
         $request      = Request::create('/', 'POST');
         $form_factory = $this->prophesize(FormFactoryInterface::class);
@@ -61,7 +65,7 @@ class HandlerBuilderTest extends \PHPUnit_Framework_TestCase
         $handler->process($request);
     }
 
-    public function testSetOptionsCallback()
+    public function testSetOptionsCallback(): void
     {
         $request      = Request::create('/', 'POST');
         $form_factory = $this->prophesize(FormFactoryInterface::class);
@@ -84,7 +88,7 @@ class HandlerBuilderTest extends \PHPUnit_Framework_TestCase
         $handler->process($request);
     }
 
-    public function testBuildSuccess()
+    public function testBuildSuccess(): void
     {
         $spy = new SuccessSubscriber();
 
@@ -110,7 +114,7 @@ class HandlerBuilderTest extends \PHPUnit_Framework_TestCase
         self::assertFalse($spy->failure);
     }
 
-    public function testBuildFailure()
+    public function testBuildFailure(): void
     {
         $spy = new FailureSubscriber();
 
@@ -136,7 +140,7 @@ class HandlerBuilderTest extends \PHPUnit_Framework_TestCase
         self::assertTrue($spy->failure);
     }
 
-    public function testBuildSuccessCallback()
+    public function testBuildSuccessCallback(): void
     {
         $success = false;
         $failure = false;
@@ -168,7 +172,7 @@ class HandlerBuilderTest extends \PHPUnit_Framework_TestCase
         self::assertFalse($failure);
     }
 
-    public function testBuildFailureCallback()
+    public function testBuildFailureCallback(): void
     {
         $success = false;
         $failure = false;
@@ -200,16 +204,14 @@ class HandlerBuilderTest extends \PHPUnit_Framework_TestCase
         self::assertTrue($failure);
     }
 
-    /**
-     * @expectedException \Hostnet\Component\FormHandler\Exception\UnknownSubscribedActionException
-     */
-    public function testRegisterActionSubscriberWrongAction()
+    public function testRegisterActionSubscriberWrongAction(): void
     {
         $builder = new HandlerBuilder();
+        $this->expectException(UnknownSubscribedActionException::class);
         $builder->registerActionSubscriber(new HenkSubscriber());
     }
 
-    public function testBuildWithCustomFormSubmitProcessor()
+    public function testBuildWithCustomFormSubmitProcessor(): void
     {
         $success = false;
         $builder = new HandlerBuilder();

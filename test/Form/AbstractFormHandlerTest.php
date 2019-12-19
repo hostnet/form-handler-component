@@ -2,20 +2,22 @@
 /**
  * @copyright 2017 Hostnet B.V.
  */
+declare(strict_types=1);
+
 namespace Hostnet\Component\Form\Simple;
 
 use Hostnet\Component\Form\AbstractFormHandler;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\Form\FormInterface;
 
 /**
- * @author Yannick de Lange <ydelange@hostnet.nl>
- * @covers Hostnet\Component\Form\AbstractFormHandler
+ * @covers \Hostnet\Component\Form\AbstractFormHandler
  */
-class AbstractFormHandlerTest extends \PHPUnit_Framework_TestCase
+class AbstractFormHandlerTest extends TestCase
 {
     private $handler;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->handler = $this->getMockForAbstractClass(AbstractFormHandler::class);
     }
