@@ -44,6 +44,6 @@ class HandlerFactoryTest extends TestCase
 
         $this->form_factory->create(TestType::class, null, [])->willReturn($form);
 
-        $this->handler_factory->create('foobar');
+        self::assertInstanceOf(Handler::class, $this->handler_factory->create('foobar'));
     }
 }

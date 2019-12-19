@@ -20,6 +20,6 @@ class FormNotFoundExceptionTest extends TestCase
 
         $e = new FormNotFoundException($handler);
 
-        self::assertContains(get_class($handler), $e->getMessage());
+        self::assertStringContainsString(get_class($handler), $e->getMessage());
     }
 }
