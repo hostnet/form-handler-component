@@ -2,12 +2,15 @@
 /**
  * @copyright 2017 Hostnet B.V.
  */
+declare(strict_types=1);
+
 namespace Hostnet\Component\FormHandler;
 
 use Hostnet\Component\Form\Simple\SimpleFormProvider;
 use Hostnet\Component\FormHandler\Fixtures\Legacy\LegacyFormHandler;
 use Hostnet\Component\FormHandler\Fixtures\TestData;
 use Hostnet\Component\FormHandler\Fixtures\TestType;
+use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\Test\FormInterface;
@@ -17,9 +20,9 @@ use Symfony\Component\HttpFoundation\Request;
 /**
  * @coversNothing
  */
-class LegacyHandlerTest extends \PHPUnit_Framework_TestCase
+class LegacyHandlerTest extends TestCase
 {
-    public function testGet()
+    public function testGet(): void
     {
         $request       = Request::create('/', 'GET');
         $form_factory  = $this->prophesize(FormFactoryInterface::class);
@@ -33,7 +36,7 @@ class LegacyHandlerTest extends \PHPUnit_Framework_TestCase
         self::assertNull($form_provider->handle($request, $handler));
     }
 
-    public function testPostSuccess()
+    public function testPostSuccess(): void
     {
         $request       = Request::create('/', 'POST');
         $form_factory  = $this->prophesize(FormFactoryInterface::class);
@@ -53,7 +56,7 @@ class LegacyHandlerTest extends \PHPUnit_Framework_TestCase
         self::assertSame('http://success.nl/', $resp->getTargetUrl());
     }
 
-    public function testPostFailure()
+    public function testPostFailure(): void
     {
         $request       = Request::create('/', 'POST');
         $form_factory  = $this->prophesize(FormFactoryInterface::class);

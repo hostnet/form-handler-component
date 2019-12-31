@@ -2,6 +2,8 @@
 /**
  * @copyright 2017 Hostnet B.V.
  */
+declare(strict_types=1);
+
 namespace Hostnet\Component\FormHandler;
 
 use Hostnet\Component\FormHandler\Fixtures\ArrayHandlerRegistry;
@@ -11,6 +13,7 @@ use Hostnet\Component\FormHandler\Fixtures\Legacy\LegacyFormHandler;
 use Hostnet\Component\FormHandler\Fixtures\LegacyHandlerRegistry;
 use Hostnet\Component\FormHandler\Fixtures\TestData;
 use Hostnet\Component\FormHandler\Fixtures\TestType;
+use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\Test\FormInterface;
@@ -20,9 +23,9 @@ use Symfony\Component\HttpFoundation\Request;
 /**
  * @covers \Hostnet\Component\FormHandler\Handler
  */
-class HandlerTest extends \PHPUnit_Framework_TestCase
+class HandlerTest extends TestCase
 {
-    public function testGetForm()
+    public function testGetForm(): void
     {
         $request         = Request::create('/', 'GET');
         $form_factory    = $this->prophesize(FormFactoryInterface::class);
@@ -43,12 +46,7 @@ class HandlerTest extends \PHPUnit_Framework_TestCase
         self::assertSame($form->reveal(), $handler->getForm());
     }
 
-    /**
-     * @expectedException \BadMethodCallException
-     * @expectedExceptionMessage Attempted to call an undefined method
-     *                           named "getData" of class "Hostnet\Component\FormHandler\Handler".
-     */
-    public function testCall()
+    public function testCall(): void
     {
         $form_factory    = $this->prophesize(FormFactoryInterface::class);
         $handler_factory = new HandlerFactory(
@@ -56,13 +54,20 @@ class HandlerTest extends \PHPUnit_Framework_TestCase
             new ArrayHandlerRegistry([new SimpleFormHandler()])
         );
 
+        $this->expectException(\BadMethodCallException::class);
+        $this->expectExceptionMessage(
+            sprintf(
+                'Attempted to call an undefined method named "getData" of class "%s".',
+                Handler::class
+            )
+        );
         $handler_factory->create(SimpleFormHandler::class)->getData();
     }
 
     /**
      * @group legacy
      */
-    public function testCallLegacy()
+    public function testCallLegacy(): void
     {
         $form_factory    = $this->prophesize(FormFactoryInterface::class);
         $handler_factory = new HandlerFactory(
@@ -73,11 +78,7 @@ class HandlerTest extends \PHPUnit_Framework_TestCase
         self::assertInstanceOf(TestData::class, $handler_factory->create(LegacyFormHandler::class)->getData());
     }
 
-    /**
-     * @expectedException \LogicException
-     * @expectedExceptionMessage Cannot retrieve form when it has not been handled.
-     */
-    public function testGetFormWhenNotHandled()
+    public function testGetFormWhenNotHandled(): void
     {
         $form_factory    = $this->prophesize(FormFactoryInterface::class);
         $handler_factory = new HandlerFactory(
@@ -85,10 +86,14 @@ class HandlerTest extends \PHPUnit_Framework_TestCase
             new ArrayHandlerRegistry([new SimpleFormHandler()])
         );
 
+        $this->expectException(\LogicException::class);
+        $this->expectExceptionMessage(
+            'Cannot retrieve form when it has not been handled'
+        );
         $handler_factory->create(SimpleFormHandler::class)->getForm();
     }
 
-    public function testSimple()
+    public function testSimple(): void
     {
         $request         = Request::create('/', 'POST');
         $form_factory    = $this->prophesize(FormFactoryInterface::class);
@@ -112,7 +117,7 @@ class HandlerTest extends \PHPUnit_Framework_TestCase
         self::assertSame($form->reveal(), $handler->getForm());
     }
 
-    public function testPostSuccess()
+    public function testPostSuccess(): void
     {
         $request         = Request::create('/', 'POST');
         $form_factory    = $this->prophesize(FormFactoryInterface::class);
@@ -142,7 +147,7 @@ class HandlerTest extends \PHPUnit_Framework_TestCase
     /**
      * @group legacy
      */
-    public function testPostSuccessSyncData()
+    public function testPostSuccessSyncData(): void
     {
         $request         = Request::create('/', 'POST');
         $form_factory    = $this->prophesize(FormFactoryInterface::class);
@@ -172,7 +177,7 @@ class HandlerTest extends \PHPUnit_Framework_TestCase
         self::assertSame($data->test, $legacy_handler->getData()->test);
     }
 
-    public function testPostFailure()
+    public function testPostFailure(): void
     {
         $request         = Request::create('/', 'POST');
         $form_factory    = $this->prophesize(FormFactoryInterface::class);

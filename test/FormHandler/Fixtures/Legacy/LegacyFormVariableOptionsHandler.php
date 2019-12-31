@@ -2,6 +2,8 @@
 /**
  * @copyright 2017 Hostnet B.V.
  */
+declare(strict_types=1);
+
 namespace Hostnet\Component\FormHandler\Fixtures\Legacy;
 
 use Hostnet\Component\Form\AbstractFormHandler;
@@ -23,27 +25,27 @@ class LegacyFormVariableOptionsHandler extends AbstractFormHandler implements
         $this->data = new TestData();
     }
 
-    public function getOptions()
+    public function getOptions(): array
     {
         return ['attr' => ['class' => $this->data->test]];
     }
 
-    public function getType()
+    public function getType(): string
     {
         return TestType::class;
     }
 
-    public function getData()
+    public function getData(): TestData
     {
         return $this->data;
     }
 
-    public function onSuccess(Request $request)
+    public function onSuccess(Request $request): RedirectResponse
     {
         return new RedirectResponse('http://success.nl/' . $this->data->test);
     }
 
-    public function onFailure(Request $request)
+    public function onFailure(Request $request): RedirectResponse
     {
         return new RedirectResponse('http://failure.nl/' . $this->data->test);
     }

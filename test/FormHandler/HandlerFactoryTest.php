@@ -2,17 +2,20 @@
 /**
  * @copyright 2017 Hostnet B.V.
  */
+declare(strict_types=1);
+
 namespace Hostnet\Component\FormHandler;
 
 use Hostnet\Component\FormHandler\Fixtures\HandlerType\SimpleFormHandler;
 use Hostnet\Component\FormHandler\Fixtures\TestType;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
 
 /**
  * @covers \Hostnet\Component\FormHandler\HandlerFactory
  */
-class HandlerFactoryTest extends \PHPUnit_Framework_TestCase
+class HandlerFactoryTest extends TestCase
 {
     private $form_factory;
     private $registry;
@@ -22,7 +25,7 @@ class HandlerFactoryTest extends \PHPUnit_Framework_TestCase
      */
     private $handler_factory;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->form_factory = $this->prophesize(FormFactoryInterface::class);
         $this->registry     = $this->prophesize(HandlerRegistryInterface::class);
@@ -33,7 +36,7 @@ class HandlerFactoryTest extends \PHPUnit_Framework_TestCase
         );
     }
 
-    public function testCreate()
+    public function testCreate(): void
     {
         $form = $this->prophesize(FormInterface::class);
 
@@ -41,6 +44,6 @@ class HandlerFactoryTest extends \PHPUnit_Framework_TestCase
 
         $this->form_factory->create(TestType::class, null, [])->willReturn($form);
 
-        $this->handler_factory->create('foobar');
+        self::assertInstanceOf(Handler::class, $this->handler_factory->create('foobar'));
     }
 }

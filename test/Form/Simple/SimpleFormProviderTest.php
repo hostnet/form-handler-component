@@ -2,32 +2,35 @@
 /**
  * @copyright 2017 Hostnet B.V.
  */
+declare(strict_types=1);
+
 namespace Hostnet\Component\Form\Simple;
 
+use Hostnet\Component\Form\Exception\FormNotFoundException;
 use Hostnet\Component\Form\FormHandlerInterface;
 use Hostnet\Component\Form\NamedFormHandlerInterface;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @author Yannick de Lange <ydelange@hostnet.nl>
- * @covers Hostnet\Component\Form\Simple\SimpleFormProvider
+ * @covers \Hostnet\Component\Form\Simple\SimpleFormProvider
  */
-class SimpleFormProviderTest extends \PHPUnit_Framework_TestCase
+class SimpleFormProviderTest extends TestCase
 {
     private $handler;
     private $factory;
     private $form;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->handler = $this->createMock(AbstractFormHandlerMock::class);
         $this->factory = $this->createMock(FormFactoryInterface::class);
         $this->form    = $this->createMock(FormInterface::class);
     }
 
-    public function testSuccess()
+    public function testSuccess(): void
     {
         $request = new Request();
 
@@ -57,7 +60,7 @@ class SimpleFormProviderTest extends \PHPUnit_Framework_TestCase
         self::assertEquals('foo', $resp);
     }
 
-    public function testFailure()
+    public function testFailure(): void
     {
         $request = new Request();
 
@@ -87,7 +90,7 @@ class SimpleFormProviderTest extends \PHPUnit_Framework_TestCase
         self::assertEquals('bar', $resp);
     }
 
-    public function testNotSubmitted()
+    public function testNotSubmitted(): void
     {
         $this->form
             ->expects(self::once())
@@ -105,7 +108,7 @@ class SimpleFormProviderTest extends \PHPUnit_Framework_TestCase
         $provider->handle(new Request(), $this->handler, $this->form);
     }
 
-    public function testNoForm()
+    public function testNoForm(): void
     {
         $this->handler
             ->expects(self::once())
@@ -126,7 +129,7 @@ class SimpleFormProviderTest extends \PHPUnit_Framework_TestCase
         $provider->handle(new Request(), $this->handler);
     }
 
-    public function testNamedForm()
+    public function testNamedForm(): void
     {
         $named_handler = $this->createMock(NamedFormHandlerInterface::class);
 
@@ -153,7 +156,7 @@ class SimpleFormProviderTest extends \PHPUnit_Framework_TestCase
         $provider->handle(new Request(), $named_handler);
     }
 
-    public function testNamedFormWithNoName()
+    public function testNamedFormWithNoName(): void
     {
         $named_handler = $this->createMock(NamedFormHandlerInterface::class);
 
@@ -180,10 +183,7 @@ class SimpleFormProviderTest extends \PHPUnit_Framework_TestCase
         $provider->handle(new Request(), $named_handler);
     }
 
-    /**
-     * @expectedException \Hostnet\Component\Form\Exception\FormNotFoundException
-     */
-    public function testNoFormNotFound()
+    public function testNoFormNotFound(): void
     {
         $this->handler
             ->expects(self::once())
@@ -191,10 +191,12 @@ class SimpleFormProviderTest extends \PHPUnit_Framework_TestCase
             ->willReturn([]);
 
         $provider = new SimpleFormProvider($this->factory);
+
+        $this->expectException(FormNotFoundException::class);
         $provider->handle(new Request(), $this->handler);
     }
 
-    public function testNoHandler()
+    public function testNoHandler(): void
     {
         $this->form
             ->expects(self::once())
@@ -210,7 +212,7 @@ class SimpleFormProviderTest extends \PHPUnit_Framework_TestCase
         $provider->handle(new Request(), $this->handler, $this->form);
     }
 
-    public function testSubmittedWithNoHandlerInterfaces()
+    public function testSubmittedWithNoHandlerInterfaces(): void
     {
         $handler = $this->createMock(FormHandlerInterface::class);
 

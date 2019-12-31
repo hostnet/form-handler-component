@@ -2,11 +2,10 @@
 /**
  * @copyright 2017 Hostnet B.V.
  */
+declare(strict_types=1);
+
 namespace Hostnet\Component\Form;
 
-/**
- * @author Yannick de Lange <ydelange@hostnet.nl>
- */
 interface NamedFormHandlerInterface extends FormHandlerInterface
 {
     /**

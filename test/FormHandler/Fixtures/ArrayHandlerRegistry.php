@@ -2,10 +2,13 @@
 /**
  * @copyright 2017 Hostnet B.V.
  */
+declare(strict_types=1);
+
 namespace Hostnet\Component\FormHandler\Fixtures;
 
 use Hostnet\Component\FormHandler\Exception\InvalidHandlerTypeException;
 use Hostnet\Component\FormHandler\HandlerRegistryInterface;
+use Hostnet\Component\FormHandler\HandlerTypeInterface;
 
 final class ArrayHandlerRegistry implements HandlerRegistryInterface
 {
@@ -19,7 +22,7 @@ final class ArrayHandlerRegistry implements HandlerRegistryInterface
     /**
      * {@inheritdoc}
      */
-    public function getType($class)
+    public function getType($class): HandlerTypeInterface
     {
         foreach ($this->handlers as $handler) {
             if ($handler instanceof $class) {

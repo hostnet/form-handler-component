@@ -2,6 +2,8 @@
 /**
  * @copyright 2017 Hostnet B.V.
  */
+declare(strict_types=1);
+
 namespace Hostnet\Component\FormHandler\Fixtures\HandlerType;
 
 use Hostnet\Component\FormHandler\ActionSubscriberInterface;
@@ -16,13 +18,13 @@ use Symfony\Component\HttpFoundation\Request;
 
 class FullFormHandler implements HandlerTypeInterface, ActionSubscriberInterface
 {
-    public function configure(HandlerConfigInterface $config)
+    public function configure(HandlerConfigInterface $config): void
     {
         $config->setType(TestType::class);
         $config->registerActionSubscriber($this);
     }
 
-    public function getSubscribedActions()
+    public function getSubscribedActions(): array
     {
         return [
             HandlerActions::SUCCESS => 'onSuccess',
@@ -30,12 +32,12 @@ class FullFormHandler implements HandlerTypeInterface, ActionSubscriberInterface
         ];
     }
 
-    public function onSuccess(TestData $data, FormInterface $form, Request $request)
+    public function onSuccess(TestData $data, FormInterface $form, Request $request): RedirectResponse
     {
         return new RedirectResponse('http://success.nl/');
     }
 
-    public function onFailure(TestData $data, FormInterface $form, Request $request)
+    public function onFailure(TestData $data, FormInterface $form, Request $request): RedirectResponse
     {
         return new RedirectResponse('http://failure.nl/');
     }

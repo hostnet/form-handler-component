@@ -2,13 +2,12 @@
 /**
  * @copyright 2017 Hostnet B.V.
  */
+declare(strict_types=1);
+
 namespace Hostnet\Component\Form;
 
 use Symfony\Component\Form\FormInterface;
 
-/**
- * @author Yannick de Lange <ydelange@hostnet.nl>
- */
 abstract class AbstractFormHandler implements NamedFormHandlerInterface
 {
     /**

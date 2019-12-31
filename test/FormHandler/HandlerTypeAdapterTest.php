@@ -2,12 +2,15 @@
 /**
  * @copyright 2017 Hostnet B.V.
  */
+declare(strict_types=1);
+
 namespace Hostnet\Component\FormHandler;
 
 use Hostnet\Component\FormHandler\Fixtures\Legacy\LegacyFormHandler;
 use Hostnet\Component\FormHandler\Fixtures\Legacy\LegacyNamedFormHandler;
 use Hostnet\Component\FormHandler\Fixtures\TestData;
 use Hostnet\Component\FormHandler\Fixtures\TestType;
+use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -16,9 +19,9 @@ use Symfony\Component\HttpFoundation\Request;
  * @group legacy
  * @covers \Hostnet\Component\FormHandler\HandlerTypeAdapter
  */
-class HandlerTypeAdapterTest extends \PHPUnit_Framework_TestCase
+class HandlerTypeAdapterTest extends TestCase
 {
-    public function testRegular()
+    public function testRegular(): void
     {
         $adapter = new HandlerTypeAdapter(new LegacyFormHandler());
         $config  = $this->prophesize(HandlerConfigInterface::class);
@@ -34,7 +37,7 @@ class HandlerTypeAdapterTest extends \PHPUnit_Framework_TestCase
         $adapter->configure($config->reveal());
     }
 
-    public function testNamed()
+    public function testNamed(): void
     {
         $adapter = new HandlerTypeAdapter(new LegacyNamedFormHandler());
         $config  = $this->prophesize(HandlerConfigInterface::class);
@@ -50,7 +53,7 @@ class HandlerTypeAdapterTest extends \PHPUnit_Framework_TestCase
         $adapter->configure($config->reveal());
     }
 
-    public function testDelegateCall()
+    public function testDelegateCall(): void
     {
         $request        = Request::create('/', 'POST');
         $legacy_handler = new LegacyNamedFormHandler();
@@ -60,7 +63,7 @@ class HandlerTypeAdapterTest extends \PHPUnit_Framework_TestCase
         self::assertSame('http://success.nl/', $adapter->delegateCall('onSuccess', [$request])->getTargetUrl());
     }
 
-    public function testSyncData()
+    public function testSyncData(): void
     {
         $controller_data = new TestData();
         $adapter         = new HandlerTypeAdapter(new LegacyNamedFormHandler());
