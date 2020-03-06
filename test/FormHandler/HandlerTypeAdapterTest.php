@@ -12,7 +12,6 @@ use Hostnet\Component\FormHandler\Fixtures\TestData;
 use Hostnet\Component\FormHandler\Fixtures\TestType;
 use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
