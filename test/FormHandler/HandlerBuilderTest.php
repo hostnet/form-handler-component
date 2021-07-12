@@ -13,6 +13,7 @@ use Hostnet\Component\FormHandler\Fixtures\ActionSubscriber\SuccessSubscriber;
 use Hostnet\Component\FormHandler\Fixtures\TestType;
 use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
+use Prophecy\PhpUnit\ProphecyTrait;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
@@ -23,6 +24,8 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class HandlerBuilderTest extends TestCase
 {
+    use ProphecyTrait;
+
     public function testSetName(): void
     {
         $request      = Request::create('/', 'POST');

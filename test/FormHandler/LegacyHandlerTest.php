@@ -12,6 +12,7 @@ use Hostnet\Component\FormHandler\Fixtures\TestData;
 use Hostnet\Component\FormHandler\Fixtures\TestType;
 use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
+use Prophecy\PhpUnit\ProphecyTrait;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\Test\FormInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -22,6 +23,8 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class LegacyHandlerTest extends TestCase
 {
+    use ProphecyTrait;
+
     public function testGet(): void
     {
         $request       = Request::create('/', 'GET');

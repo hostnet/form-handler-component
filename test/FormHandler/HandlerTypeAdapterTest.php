@@ -12,6 +12,7 @@ use Hostnet\Component\FormHandler\Fixtures\TestData;
 use Hostnet\Component\FormHandler\Fixtures\TestType;
 use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
+use Prophecy\PhpUnit\ProphecyTrait;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -20,6 +21,8 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class HandlerTypeAdapterTest extends TestCase
 {
+    use ProphecyTrait;
+
     public function testRegular(): void
     {
         $adapter = new HandlerTypeAdapter(new LegacyFormHandler());
