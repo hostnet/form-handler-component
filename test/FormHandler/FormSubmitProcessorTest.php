@@ -8,6 +8,7 @@ namespace Hostnet\Component\FormHandler;
 
 use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
+use Prophecy\PhpUnit\ProphecyTrait;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -16,6 +17,8 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class FormSubmitProcessorTest extends TestCase
 {
+    use ProphecyTrait;
+
     private $form;
     private $on_process;
 

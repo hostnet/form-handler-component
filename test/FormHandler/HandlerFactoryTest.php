@@ -9,6 +9,7 @@ namespace Hostnet\Component\FormHandler;
 use Hostnet\Component\FormHandler\Fixtures\HandlerType\SimpleFormHandler;
 use Hostnet\Component\FormHandler\Fixtures\TestType;
 use PHPUnit\Framework\TestCase;
+use Prophecy\PhpUnit\ProphecyTrait;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
 
@@ -17,6 +18,8 @@ use Symfony\Component\Form\FormInterface;
  */
 class HandlerFactoryTest extends TestCase
 {
+    use ProphecyTrait;
+
     private $form_factory;
     private $registry;
 
