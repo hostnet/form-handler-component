@@ -2,9 +2,9 @@
     "name":              "hostnet/form-handler-component",
     "description":       "Hostnet form handler to provide an easier way of handling forms",
     "license":           "MIT",
-    "minimum-stability": "dev",
+    "minimum-stability": "stable",
     "require": {
-        "php":                     "^7.3",
+        "php":                     "^7.3||^8.0",
         "symfony/form":            "^4.0||^5.0",
         "symfony/http-foundation": "^4.0||^5.0"
     },
