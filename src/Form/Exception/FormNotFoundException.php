@@ -16,7 +16,7 @@ class FormNotFoundException extends \RuntimeException
     public function __construct(FormHandlerInterface $handler)
     {
         parent::__construct(sprintf(
-            "Could not find form for handler %s. Did you forget to set the form?",
+            'Could not find form for handler %s. Did you forget to set the form?',
             get_class($handler)
         ));
     }

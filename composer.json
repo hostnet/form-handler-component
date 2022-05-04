@@ -9,7 +9,7 @@
         "symfony/http-foundation": "^4.0||^5.0"
     },
     "require-dev": {
-        "hostnet/phpcs-tool":       "^8.3.11",
+        "hostnet/phpcs-tool":       "^9.1.0",
         "phpspec/prophecy-phpunit": "^2.0.1",
         "phpunit/phpunit":          "^9.5.5",
         "symfony/debug":            "^4.0||^5.0",
@@ -23,6 +23,12 @@
     "autoload-dev": {
         "psr-4": {
             "Hostnet\\Component\\": "test/"
+        }
+    },
+    "config": {
+        "allow-plugins": {
+            "hostnet/*":                                      true,
+            "dealerdirect/phpcodesniffer-composer-installer": false
         }
     }
 }

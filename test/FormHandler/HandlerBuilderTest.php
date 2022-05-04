@@ -160,10 +160,10 @@ class HandlerBuilderTest extends TestCase
         $form_factory->create(TestType::class, null, [])->willReturn($form);
 
         $builder = new HandlerBuilder();
-        $builder->onSuccess(function () use (&$success) {
+        $builder->onSuccess(function () use (&$success): void {
             $success = true;
         });
-        $builder->onFailure(function () use (&$failure) {
+        $builder->onFailure(function () use (&$failure): void {
             $failure = true;
         });
         $builder->setType(TestType::class);
@@ -192,10 +192,10 @@ class HandlerBuilderTest extends TestCase
         $form_factory->create(TestType::class, null, [])->willReturn($form);
 
         $builder = new HandlerBuilder();
-        $builder->onSuccess(function () use (&$success) {
+        $builder->onSuccess(function () use (&$success): void {
             $success = true;
         });
-        $builder->onFailure(function () use (&$failure) {
+        $builder->onFailure(function () use (&$failure): void {
             $failure = true;
         });
         $builder->setType(TestType::class);
@@ -218,7 +218,7 @@ class HandlerBuilderTest extends TestCase
     {
         $success = false;
         $builder = new HandlerBuilder();
-        $builder->setFormSubmitProcessor(function () use (&$success) {
+        $builder->setFormSubmitProcessor(function () use (&$success): void {
             $success = true;
         });
 
