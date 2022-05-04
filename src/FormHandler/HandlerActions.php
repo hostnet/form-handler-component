@@ -18,13 +18,13 @@ final class HandlerActions
      * The success action is triggered when the form is submitted and is
      * validated correctly.
      */
-    const SUCCESS = 'success';
+    public const SUCCESS = 'success';
 
     /**
      * The failure case is triggered when the form is submitted and is not
      * validated correctly.
      */
-    const FAILURE = 'failure';
+    public const FAILURE = 'failure';
 
     /**
      * @codeCoverageIgnore private by design because this is an ENUM class

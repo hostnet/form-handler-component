@@ -140,7 +140,7 @@ class FormSubmitProcessorTest extends TestCase
         self::assertSame('success', $this->form_submit_processor->process($request));
     }
 
-    public function testSubmitValidNoHandler()
+    public function testSubmitValidNoHandler(): void
     {
         $request               = Request::create('/', 'POST');
         $form_submit_processor = new FormSubmitProcessor($this->form->reveal());
@@ -187,7 +187,7 @@ class FormSubmitProcessorTest extends TestCase
             $this->form->reveal(),
             null,
             null,
-            function () {
+            function (): void {
                 $this->on_process = true;
             }
         );

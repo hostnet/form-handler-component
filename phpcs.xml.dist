@@ -1,4 +1,4 @@
 <?xml version="1.0"?>
-<ruleset name="form-handler-component">
-    <rule ref="Hostnet" />
+<ruleset name="form-handler-component PHPCS">
+  <rule ref="Hostnet-Level-1"/>
 </ruleset>

@@ -22,7 +22,7 @@ class AbstractFormHandlerTest extends TestCase
         $this->handler = $this->getMockForAbstractClass(AbstractFormHandler::class);
     }
 
-    public function testGettersAndSetters()
+    public function testGettersAndSetters(): void
     {
         $this->handler
             ->expects(self::any())
