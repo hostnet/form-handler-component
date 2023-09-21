@@ -39,19 +39,23 @@ class SimpleFormProvider implements FormProviderInterface
         if (null !== $form) {
             $handler->setForm($form);
         } elseif (null === ($form = $handler->getForm())) {
-            if ($handler instanceof NamedFormHandlerInterface && null !== ($name = $handler->getName())) {
-                $form = $this->form_factory->createNamed(
-                    $name,
-                    $handler->getType(),
-                    $handler->getData(),
-                    $handler->getOptions()
-                );
-            } else {
-                $form = $this->form_factory->create(
-                    $handler->getType(),
-                    $handler->getData(),
-                    $handler->getOptions()
-                );
+            try {
+                if ($handler instanceof NamedFormHandlerInterface && null !== ($name = $handler->getName())) {
+                    $form = $this->form_factory->createNamed(
+                        $name,
+                        $handler->getType(),
+                        $handler->getData(),
+                        $handler->getOptions()
+                    );
+                } else {
+                    $form = $this->form_factory->create(
+                        $handler->getType(),
+                        $handler->getData(),
+                        $handler->getOptions()
+                    );
+                }
+            } catch (\InvalidArgumentException $e) {
+                $form = null;
             }
 
             if (!$form instanceof FormInterface) {

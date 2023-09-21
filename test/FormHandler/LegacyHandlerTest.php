@@ -33,6 +33,8 @@ class LegacyHandlerTest extends TestCase
         $handler       = new LegacyFormHandler();
 
         $form = $this->prophesize(FormInterface::class);
+        $form->handleRequest($request)->shouldBeCalled()->willReturn($form);
+        $form->isSubmitted()->willReturn(false);
 
         $form_factory->create(TestType::class, Argument::type(TestData::class), [])->willReturn($form);
 
@@ -47,7 +49,7 @@ class LegacyHandlerTest extends TestCase
         $handler       = new LegacyFormHandler();
 
         $form = $this->prophesize(FormInterface::class);
-        $form->handleRequest($request)->shouldBeCalled();
+        $form->handleRequest($request)->shouldBeCalled()->willReturn($form);
         $form->isSubmitted()->willReturn(true);
         $form->isValid()->willReturn(true);
 
@@ -67,7 +69,7 @@ class LegacyHandlerTest extends TestCase
         $handler       = new LegacyFormHandler();
 
         $form = $this->prophesize(FormInterface::class);
-        $form->handleRequest($request)->shouldBeCalled();
+        $form->handleRequest($request)->shouldBeCalled()->willReturn($form);
         $form->isSubmitted()->willReturn(true);
         $form->isValid()->willReturn(false);
 

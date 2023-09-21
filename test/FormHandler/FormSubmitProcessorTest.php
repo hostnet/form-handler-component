@@ -66,9 +66,10 @@ class FormSubmitProcessorTest extends TestCase
             [$this, 'callbackFailure']
         );
 
-        $request = Request::create('/', 'POST');
+        $request        = Request::create('/', 'POST');
+        $form_interface = $this->prophesize(FormInterface::class);
 
-        $this->form->handleRequest($request)->shouldBeCalled();
+        $this->form->handleRequest($request)->shouldBeCalled()->willReturn($form_interface);
         $this->form->isSubmitted()->willReturn(true);
         $this->form->isValid()->willReturn(false);
         $this->form->getData()->willReturn([]);
@@ -84,9 +85,10 @@ class FormSubmitProcessorTest extends TestCase
             [$this, 'callbackFailure']
         );
 
-        $request = Request::create('/', 'POST');
+        $request        = Request::create('/', 'POST');
+        $form_interface = $this->prophesize(FormInterface::class);
 
-        $this->form->handleRequest($request)->shouldBeCalled();
+        $this->form->handleRequest($request)->shouldBeCalled()->willReturn($form_interface);
         $this->form->isSubmitted()->willReturn(true);
         $this->form->isValid()->willReturn(true);
         $this->form->getData()->willReturn([]);
@@ -120,9 +122,10 @@ class FormSubmitProcessorTest extends TestCase
 
     public function testSubmitNotSubmitted(): void
     {
-        $request = Request::create('/', 'POST');
+        $request        = Request::create('/', 'POST');
+        $form_interface = $this->prophesize(FormInterface::class);
 
-        $this->form->handleRequest($request)->shouldBeCalled();
+        $this->form->handleRequest($request)->shouldBeCalled()->willReturn($form_interface);
         $this->form->isSubmitted()->willReturn(false);
 
         self::assertNull($this->form_submit_processor->process($request));
@@ -130,9 +133,10 @@ class FormSubmitProcessorTest extends TestCase
 
     public function testSubmitValid(): void
     {
-        $request = Request::create('/', 'POST');
+        $request        = Request::create('/', 'POST');
+        $form_interface = $this->prophesize(FormInterface::class);
 
-        $this->form->handleRequest($request)->shouldBeCalled();
+        $this->form->handleRequest($request)->shouldBeCalled()->willReturn($form_interface);
         $this->form->isSubmitted()->willReturn(true);
         $this->form->isValid()->willReturn(true);
         $this->form->getData()->willReturn([]);
@@ -144,8 +148,9 @@ class FormSubmitProcessorTest extends TestCase
     {
         $request               = Request::create('/', 'POST');
         $form_submit_processor = new FormSubmitProcessor($this->form->reveal());
+        $form_interface        = $this->prophesize(FormInterface::class);
 
-        $this->form->handleRequest($request)->shouldBeCalled();
+        $this->form->handleRequest($request)->shouldBeCalled()->willReturn($form_interface);
         $this->form->isSubmitted()->willReturn(true);
         $this->form->isValid()->willReturn(true);
         $this->form->getData()->willReturn([]);
@@ -155,9 +160,10 @@ class FormSubmitProcessorTest extends TestCase
 
     public function testSubmitInvalid(): void
     {
-        $request = Request::create('/', 'POST');
+        $request        = Request::create('/', 'POST');
+        $form_interface = $this->prophesize(FormInterface::class);
 
-        $this->form->handleRequest($request)->shouldBeCalled();
+        $this->form->handleRequest($request)->shouldBeCalled()->willReturn($form_interface);
         $this->form->isSubmitted()->willReturn(true);
         $this->form->isValid()->willReturn(false);
         $this->form->getData()->willReturn([]);
@@ -169,8 +175,9 @@ class FormSubmitProcessorTest extends TestCase
     {
         $request               = Request::create('/', 'POST');
         $form_submit_processor = new FormSubmitProcessor($this->form->reveal());
+        $form_interface        = $this->prophesize(FormInterface::class);
 
-        $this->form->handleRequest($request)->shouldBeCalled();
+        $this->form->handleRequest($request)->shouldBeCalled()->willReturn($form_interface);
         $this->form->isSubmitted()->willReturn(true);
         $this->form->isValid()->willReturn(false);
         $this->form->getData()->willReturn([]);
