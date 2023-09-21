@@ -211,6 +211,10 @@ class SimpleFormProviderTest extends TestCase
             ->method('getType')
             ->willReturn(FormType::class);
 
+        $this->factory
+            ->method('create')
+            ->willThrowException(new \InvalidArgumentException());
+
         $provider = new SimpleFormProvider($this->factory);
 
         $this->expectException(FormNotFoundException::class);

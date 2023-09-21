@@ -42,6 +42,9 @@ class HandlerBackwardsCompatibilityTest extends TestCase
 
         $form_factory->create(TestType::class, Argument::type(TestData::class), [])->willReturn($form);
 
+        $form->handleRequest($request)->shouldBeCalled()->willReturn($form);
+        $form->isSubmitted()->willReturn(false);
+
         self::assertNull($handler_factory->create(LegacyFormHandler::class)->handle($request, $data));
     }
 
@@ -61,6 +64,9 @@ class HandlerBackwardsCompatibilityTest extends TestCase
         $form_factory
             ->create(TestType::class, Argument::type(TestData::class), ['attr' => ['class' => 'foobar']])
             ->willReturn($form);
+
+        $form->handleRequest($request)->shouldBeCalled()->willReturn($form);
+        $form->isSubmitted()->willReturn(false);
 
         self::assertNull($handler_factory->create(LegacyFormVariableOptionsHandler::class)->handle($request, $data));
     }
@@ -90,7 +96,7 @@ class HandlerBackwardsCompatibilityTest extends TestCase
         $data->test      = 'foobar';
 
         $form = $this->prophesize(FormInterface::class);
-        $form->handleRequest($request)->shouldBeCalled();
+        $form->handleRequest($request)->shouldBeCalled()->willReturn($form);
         $form->isSubmitted()->willReturn(true);
         $form->isValid()->willReturn(true);
         $form->getData()->willReturn($data);
@@ -115,7 +121,7 @@ class HandlerBackwardsCompatibilityTest extends TestCase
         $data->test      = 'foobar';
 
         $form = $this->prophesize(FormInterface::class);
-        $form->handleRequest($request)->shouldBeCalled();
+        $form->handleRequest($request)->shouldBeCalled()->willReturn($form);
         $form->isSubmitted()->willReturn(true);
         $form->isValid()->willReturn(false);
         $form->getData()->willReturn($data);

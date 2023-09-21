@@ -32,7 +32,7 @@ class HandlerBuilderTest extends TestCase
         $form_factory = $this->prophesize(FormFactoryInterface::class);
 
         $form = $this->prophesize(FormInterface::class);
-        $form->handleRequest($request)->shouldBeCalled();
+        $form->handleRequest($request)->shouldBeCalled()->willReturn($form);
         $form->isSubmitted()->willReturn(true);
         $form->isValid()->willReturn(true);
         $form->getData()->willReturn(null);
@@ -53,7 +53,7 @@ class HandlerBuilderTest extends TestCase
         $form_factory = $this->prophesize(FormFactoryInterface::class);
 
         $form = $this->prophesize(FormInterface::class);
-        $form->handleRequest($request)->shouldBeCalled();
+        $form->handleRequest($request)->shouldBeCalled()->willReturn($form);
         $form->isSubmitted()->willReturn(true);
         $form->isValid()->willReturn(true);
         $form->getData()->willReturn(null);
@@ -74,7 +74,7 @@ class HandlerBuilderTest extends TestCase
         $form_factory = $this->prophesize(FormFactoryInterface::class);
 
         $form = $this->prophesize(FormInterface::class);
-        $form->handleRequest($request)->shouldBeCalled();
+        $form->handleRequest($request)->shouldBeCalled()->willReturn($form);
         $form->isSubmitted()->willReturn(true);
         $form->isValid()->willReturn(true);
         $form->getData()->willReturn(null);
@@ -99,7 +99,7 @@ class HandlerBuilderTest extends TestCase
         $form_factory = $this->prophesize(FormFactoryInterface::class);
 
         $form = $this->prophesize(FormInterface::class);
-        $form->handleRequest($request)->shouldBeCalled();
+        $form->handleRequest($request)->shouldBeCalled()->willReturn($form);
         $form->isSubmitted()->willReturn(true);
         $form->isValid()->willReturn(true);
         $form->getData()->willReturn(null);
@@ -125,7 +125,7 @@ class HandlerBuilderTest extends TestCase
         $form_factory = $this->prophesize(FormFactoryInterface::class);
 
         $form = $this->prophesize(FormInterface::class);
-        $form->handleRequest($request)->shouldBeCalled();
+        $form->handleRequest($request)->shouldBeCalled()->willReturn($form);
         $form->isSubmitted()->willReturn(true);
         $form->isValid()->willReturn(false);
         $form->getData()->willReturn(null);
@@ -152,7 +152,7 @@ class HandlerBuilderTest extends TestCase
         $form_factory = $this->prophesize(FormFactoryInterface::class);
 
         $form = $this->prophesize(FormInterface::class);
-        $form->handleRequest($request)->shouldBeCalled();
+        $form->handleRequest($request)->shouldBeCalled()->willReturn($form);
         $form->isSubmitted()->willReturn(true);
         $form->isValid()->willReturn(true);
         $form->getData()->willReturn(null);
@@ -184,7 +184,7 @@ class HandlerBuilderTest extends TestCase
         $form_factory = $this->prophesize(FormFactoryInterface::class);
 
         $form = $this->prophesize(FormInterface::class);
-        $form->handleRequest($request)->shouldBeCalled();
+        $form->handleRequest($request)->shouldBeCalled()->willReturn($form);
         $form->isSubmitted()->willReturn(true);
         $form->isValid()->willReturn(false);
         $form->getData()->willReturn(null);
