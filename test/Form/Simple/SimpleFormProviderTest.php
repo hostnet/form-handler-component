@@ -10,7 +10,6 @@ use Hostnet\Component\Form\Exception\FormNotFoundException;
 use Hostnet\Component\Form\FormHandlerInterface;
 use Hostnet\Component\Form\NamedFormHandlerInterface;
 use PHPUnit\Framework\TestCase;
-use Prophecy\Argument;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
@@ -213,7 +212,7 @@ class SimpleFormProviderTest extends TestCase
             ->willReturn(FormType::class);
 
         $this->factory
-            ->method("create")
+            ->method('create')
             ->willThrowException(new \InvalidArgumentException());
 
         $provider = new SimpleFormProvider($this->factory);
